@@ -1,4 +1,4 @@
-const CACHE = 'candela-v1';
+const CACHE = 'candela-v3';
 const ASSETS = ['./index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', e => {
