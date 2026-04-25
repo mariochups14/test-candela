@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Test Candela">
+<meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>Test Candela — Procesal Civil</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{
+    --bg:#0f172a;--surface:#1e293b;--surface2:#273449;
+    --primary:#3b82f6;--primary-dark:#2563eb;
+    --green:#22c55e;--red:#ef4444;--yellow:#f59e0b;
+    --text:#f1f5f9;--muted:#94a3b8;--border:#334155;
+    --radius:14px;--safe-bottom:env(safe-area-inset-bottom,0px);
+  }
+  html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;overflow:hidden}
+  #app{height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto}
+  .screen{flex:1;overflow-y:auto;padding:20px 16px;padding-bottom:calc(24px + var(--safe-bottom));display:none}
+  .screen.active{display:flex;flex-direction:column;gap:16px}
+
+  /* HOME */
+  .logo{text-align:center;padding:32px 0 8px}
+  .logo-icon{font-size:56px}
+  .logo h1{font-size:24px;font-weight:700;margin-top:8px;letter-spacing:-0.5px}
+  .logo p{color:var(--muted);font-size:14px;margin-top:4px}
+  .section-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:0 2px}
+  .block-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .block-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .15s;text-align:left}
+  .block-card:active{transform:scale(.97);background:var(--surface2)}
+  .block-card .badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;background:var(--primary);color:white;display:inline-block;margin-bottom:8px}
+  .block-card h3{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:4px}
+  .block-card p{font-size:12px;color:var(--muted);line-height:1.4}
+  .general-card{background:linear-gradient(135deg,#1e3a5f,#1e293b);border:1px solid var(--primary);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all .15s;text-align:center}
+  .general-card:active{transform:scale(.98)}
+  .general-card h2{font-size:18px;font-weight:700;margin-bottom:4px}
+  .general-card p{font-size:13px;color:var(--muted)}
+  .num-row{display:flex;gap:8px;flex-wrap:wrap}
+  .num-btn{flex:1;min-width:60px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer;font-size:14px;font-weight:600;color:var(--text);transition:all .15s}
+  .num-btn:active,.num-btn.selected{background:var(--primary);border-color:var(--primary);color:white}
+  .start-btn{background:var(--primary);color:white;border:none;border-radius:var(--radius);padding:16px;font-size:16px;font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:0.3px}
+  .start-btn:active{background:var(--primary-dark);transform:scale(.98)}
+  .start-btn:disabled{opacity:.4;cursor:default}
+
+  /* QUIZ */
+  .quiz-header{display:flex;align-items:center;gap:12px}
+  .back-btn{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 12px;cursor:pointer;font-size:14px;color:var(--muted);white-space:nowrap}
+  .back-btn:active{background:var(--surface2)}
+  .progress-wrap{flex:1}
+  .progress-info{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px}
+  .progress-bar{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+  .progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .3s ease}
+  .score-badge{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+  .score-badge span{color:var(--green)}
+  .bloque-chip{font-size:11px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:.8px}
+  .question-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+  .question-card p{font-size:16px;font-weight:500;line-height:1.5}
+  .options{display:flex;flex-direction:column;gap:8px}
+  .option{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;font-size:14px;line-height:1.4;transition:all .15s;text-align:left}
+  .option:active:not(.disabled){background:var(--surface2)}
+  .option.disabled{cursor:default}
+  .option.selected{border-color:var(--primary);background:rgba(59,130,246,.1)}
+  .option.correct{border-color:var(--green);background:rgba(34,197,94,.12);color:var(--green)}
+  .option.wrong{border-color:var(--red);background:rgba(239,68,68,.1);color:var(--red)}
+  .feedback{border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.5;display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
+  .feedback.ko{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+  .feedback strong{display:block;margin-bottom:4px;font-size:15px}
+  .next-btn{background:var(--primary);color:white;border:none;border-radius:var(--radius);padding:15px;font-size:15px;font-weight:700;cursor:pointer;display:none;transition:all .15s}
+  .next-btn.show{display:block}
+  .next-btn:active{background:var(--primary-dark)}
+
+  /* RESULT */
+  .result-hero{text-align:center;padding:24px 0 8px}
+  .result-emoji{font-size:64px}
+  .result-pct{font-size:48px;font-weight:800;margin:8px 0 4px;letter-spacing:-2px}
+  .result-label{color:var(--muted);font-size:15px}
+  .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center}
+  .stat-card .val{font-size:28px;font-weight:700}
+  .stat-card .lbl{font-size:12px;color:var(--muted);margin-top:2px}
+  .stat-card.green .val{color:var(--green)}
+  .stat-card.red .val{color:var(--red)}
+  .review-title{font-size:16px;font-weight:700;padding:4px 0}
+  .review-item{background:var(--surface);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:16px;font-size:13px}
+  .review-item .rq{font-weight:600;margin-bottom:10px;line-height:1.4;color:var(--text)}
+  .review-item .ra{margin:3px 0;padding:6px 10px;border-radius:8px;line-height:1.3}
+  .review-item .ra.wrong{background:rgba(239,68,68,.1);color:#fca5a5}
+  .review-item .ra.correct{background:rgba(34,197,94,.1);color:#86efac}
+  .review-item .exp{margin-top:8px;padding-top:8px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.4}
+  .result-actions{display:flex;flex-direction:column;gap:10px}
+  .btn-outline{background:transparent;color:var(--primary);border:1.5px solid var(--primary);border-radius:var(--radius);padding:14px;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s}
+  .btn-outline:active{background:rgba(59,130,246,.1)}
+
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:4px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HOME -->
+  <div id="screen-home" class="screen active">
+    <div class="logo">
+      <div class="logo-icon">⚖️</div>
+      <h1>Test Candela</h1>
+      <p>Derecho Procesal Civil</p>
+    </div>
+
+    <p class="section-title">Por bloques</p>
+    <div class="block-grid">
+      <div class="block-card" onclick="selectBlock(0)">
+        <span class="badge">Bloque 1</span>
+        <h3>Jurisdicción y Competencia</h3>
+        <p>LAJ, órganos, postulación, plazos</p>
+      </div>
+      <div class="block-card" onclick="selectBlock(1)">
+        <span class="badge">Bloque 2</span>
+        <h3>Procesos Declarativos</h3>
+        <p>Verbal, ordinario, especiales, familia</p>
+      </div>
+      <div class="block-card" onclick="selectBlock(2)">
+        <span class="badge">Bloque 3</span>
+        <h3>Ejecución y Cautelares</h3>
+        <p>Títulos, embargo, hipotecaria</p>
+      </div>
+      <div class="block-card" onclick="selectBlock(3)">
+        <span class="badge">Bloque 4</span>
+        <h3>Terminación y Costas</h3>
+        <p>Crisis procesales, tasas, MASC</p>
+      </div>
+    </div>
+
+    <p class="section-title">Test general</p>
+    <div class="general-card" onclick="selectBlock(-1)">
+      <h2>🎯 Test General</h2>
+      <p>Preguntas de todos los bloques</p>
+    </div>
+
+    <p class="section-title">Número de preguntas</p>
+    <div class="num-row" id="num-row">
+      <div class="num-btn selected" onclick="selectNum(this,10)">10</div>
+      <div class="num-btn" onclick="selectNum(this,20)">20</div>
+      <div class="num-btn" onclick="selectNum(this,30)">30</div>
+      <div class="num-btn" onclick="selectNum(this,0)">Todas</div>
+    </div>
+
+    <button class="start-btn" id="start-btn" onclick="startQuiz()" disabled>Selecciona un bloque</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="screen-quiz" class="screen">
+    <div class="quiz-header">
+      <div class="back-btn" onclick="goHome()">← Inicio</div>
+      <div class="progress-wrap">
+        <div class="progress-info">
+          <span id="q-counter">1 / 10</span>
+          <span id="q-bloque">Bloque 1</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="score-badge">✓ <span id="score-live">0</span></div>
+    </div>
+
+    <div class="question-card">
+      <p id="question-text">Cargando...</p>
+    </div>
+
+    <div class="options" id="options-container"></div>
+
+    <div class="feedback" id="feedback">
+      <strong id="feedback-title"></strong>
+      <span id="feedback-body"></span>
+    </div>
+
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Siguiente →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="screen-result" class="screen">
+    <div class="result-hero">
+      <div class="result-emoji" id="res-emoji">🎉</div>
+      <div class="result-pct" id="res-pct">0%</div>
+      <div class="result-label" id="res-label">Resultado</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card green">
+        <div class="val" id="res-ok">0</div>
+        <div class="lbl">Correctas</div>
+      </div>
+      <div class="stat-card red">
+        <div class="val" id="res-ko">0</div>
+        <div class="lbl">Incorrectas</div>
+      </div>
+    </div>
+
+    <div id="review-section" style="display:none">
+      <p class="review-title">Repasa tus errores</p>
+      <div id="review-list" style="display:flex;flex-direction:column;gap:10px"></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="start-btn" onclick="repeatQuiz()">🔄 Repetir este test</button>
+      <button class="btn-outline" onclick="goHome()">← Volver al inicio</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== BANCO DE PREGUNTAS =====
+const QUESTIONS = [
+  // ── BLOQUE 1: Jurisdicción y Competencia ──
+  {b:0, q:"¿Qué criterio determina que un asunto civil sea conocido por la Sección de lo Mercantil del Tribunal de Instancia y no por la Sección Civil general?",
+   o:["Criterio territorial","Criterio material","Criterio funcional","Criterio personal"],
+   a:1, e:"La competencia objetiva se distribuye por criterio material: la materia del asunto (mercantil, familia, civil general) determina qué sección conoce."},
+
+  {b:0, q:"¿Ante qué órgano se interpone el recurso de casación civil en España?",
+   o:["Audiencia Provincial","Tribunal Superior de Justicia","Tribunal Supremo, Sala Primera","Tribunal Constitucional"],
+   a:2, e:"La Sala Primera (Civil) del Tribunal Supremo conoce del recurso de casación civil y unifica la doctrina jurisprudencial."},
+
+  {b:0, q:"El Letrado de la Administración de Justicia (LAJ), ¿puede dictar sentencias?",
+   o:["Sí, en asuntos de cuantía inferior a 2.000€","No, dicta diligencias y decretos pero nunca sentencias","Sí, en procedimientos de jurisdicción voluntaria","Sí, cuando el juez lo delegue expresamente"],
+   a:1, e:"El LAJ no tiene potestad jurisdiccional. Dicta diligencias de ordenación, decretos y diligencias de constancia, pero las resoluciones que deciden el fondo corresponden exclusivamente al juez."},
+
+  {b:0, q:"¿Qué cuerpo funcionarial realiza las notificaciones, embargos y lanzamientos bajo la dirección del LAJ?",
+   o:["Cuerpo de Gestión Procesal","Cuerpo de Tramitación Procesal","Cuerpo de Auxilio Judicial","Cuerpo de Médicos Forenses"],
+   a:2, e:"El Cuerpo de Auxilio Judicial ejecuta materialmente los actos de comunicación y las diligencias de ejecución (embargos, lanzamientos) bajo la dirección del LAJ."},
+
+  {b:0, q:"¿En qué casos es obligatoria la representación por procurador en el proceso civil?",
+   o:["Siempre, sin excepción","Nunca; el abogado puede postular directamente","En general sí, salvo excepciones legales (juicio verbal hasta 2.000€, actos de jurisdicción voluntaria sin oposición…)","Solo en recursos ante el Tribunal Supremo"],
+   a:2, e:"La regla general es la postulación obligatoria (procurador + abogado). La LEC prevé excepciones tasadas, como el juicio verbal de cuantía no superior a 2.000 € o determinados actos de JV sin oposición."},
+
+  {b:0, q:"¿Qué es el poder apud acta?",
+   o:["Un poder notarial para pleitos","Una autorización otorgada ante el LAJ del tribunal que evita escritura notarial","Un poder especial para actos de disposición","La delegación de la representación a un sustituto"],
+   a:1, e:"El poder apud acta se otorga compareciendo ante el LAJ del tribunal; es gratuito y equivale al poder notarial a efectos de representación procesal."},
+
+  {b:0, q:"¿Qué es la competencia funcional?",
+   o:["La que distribuye asuntos por materia entre órganos del mismo nivel","La que atribuye el conocimiento de los recursos y la ejecución de la sentencia al tribunal que dictó la resolución principal","La que fija el tribunal territorialmente competente","La que reparte asuntos por cuantía"],
+   a:1, e:"La competencia funcional determina qué órgano conoce de los recursos, incidentes y ejecución en función del vínculo con el proceso principal ya iniciado."},
+
+  {b:0, q:"¿Qué fuero general territorial aplica cuando el demandado es una persona física?",
+   o:["El lugar donde se firmó el contrato","El domicilio del actor","El domicilio del demandado","La capital de la provincia del demandado"],
+   a:2, e:"El artículo 50 LEC establece como fuero general el domicilio del demandado (actor sequitur forum rei)."},
+
+  {b:0, q:"¿Cómo se llama la excepción procesal por la que el demandado niega la competencia del tribunal que está conociendo del asunto?",
+   o:["Excepción de cosa juzgada","Declinatoria","Inhibitoria","Excepción de litispendencia"],
+   a:1, e:"La declinatoria (art. 63 LEC) es el mecanismo que permite al demandado solicitar que el tribunal se inhiba por falta de jurisdicción o competencia."},
+
+  {b:0, q:"¿Qué diferencia existe entre notificación, emplazamiento, citación y requerimiento?",
+   o:["Son sinónimos legales","Notificación informa; emplazamiento fija plazo para actuar; citación convoca a lugar/hora; requerimiento intima a hacer/no hacer","Notificación y citación son lo mismo; emplazamiento y requerimiento también","Solo se diferencian por el destinatario"],
+   a:1, e:"Son cuatro actos de comunicación distintos: la notificación informa de una resolución; el emplazamiento otorga plazo para comparecer/contestar; la citación señala día, hora y lugar; el requerimiento insta a una conducta."},
+
+  {b:0, q:"¿Cuántos días tiene el profesional (abogado/procurador) para acceder a la notificación electrónica recibida por LexNET antes de que se entienda producida?",
+   o:["3 días hábiles","10 días naturales","3 días naturales","5 días hábiles"],
+   a:2, e:"Conforme a la normativa LexNET, el profesional dispone de 3 días naturales desde el envío para acceder al acto de comunicación; si no accede, la notificación se entiende practicada."},
+
+  {b:0, q:"¿Cuándo procede la notificación edictal (tablón/BOE)?",
+   o:["Cuando el demandado está en paradero desconocido y se han agotado otros medios de localización","Siempre que el demandado no tenga abogado","Cuando la cuantía supera 6.000€","A petición del actor en cualquier caso"],
+   a:0, e:"La notificación edictal es subsidiaria: solo procede cuando resulta imposible localizar al demandado por los medios ordinarios (domicilio, registros, bases de datos) y se ha agotado la búsqueda."},
+
+  {b:0, q:"¿Qué acto de comunicación se utiliza cuando el tribunal necesita recabar la actuación de otro órgano jurisdiccional del mismo Estado?",
+   o:["Comisión rogatoria","Exhorto","Mandamiento","Oficio"],
+   a:1, e:"El exhorto es la comunicación entre tribunales españoles para solicitar la práctica de diligencias fuera del territorio de la circunscripción del tribunal requirente."},
+
+  {b:0, q:"Los plazos procesales: ¿son improrrogables salvo disposición en contrario?",
+   o:["No, el juez puede ampliarlos libremente","Sí, como regla general son improrrogables","Solo los plazos para recurrir son improrrogables","Depende de si son días hábiles o naturales"],
+   a:1, e:"El artículo 134 LEC establece la improrrogabilidad como regla general. Los plazos solo son prorrogables cuando la ley expresamente lo permita."},
+
+  {b:0, q:"¿En qué tribunal de la jerarquía civil conoce en segunda instancia (apelación) de las sentencias dictadas por el Tribunal de Instancia?",
+   o:["Tribunal Supremo","Tribunal Superior de Justicia","Audiencia Provincial","El propio Tribunal de Instancia en sección diferente"],
+   a:2, e:"La Audiencia Provincial es el órgano de segunda instancia para la apelación civil de las resoluciones del Tribunal de Instancia (art. 82 LOPJ)."},
+
+  {b:0, q:"¿Qué son los Servicios Comunes del Tribunal de Instancia según LO 1/2025?",
+   o:["Departamentos administrativos de personal","Órganos auxiliares que centralizan tramitación, ejecución y registro/reparto/Registro Civil para varios órganos judiciales","Salas especializadas con competencia propia","Los juzgados de guardia"],
+   a:1, e:"LO 1/2025 creó los Servicios Comunes de Tramitación, Ejecución y General para centralizar funciones que antes asumía cada juzgado individualmente, ganando eficiencia."},
+
+  {b:0, q:"¿Cuál es el plazo para interponer la declinatoria desde el emplazamiento para contestar?",
+   o:["Antes de contestar la demanda, dentro de los 10 primeros días del plazo de contestación","En cualquier momento del proceso","Solo antes de la audiencia previa","Dentro de los 5 días siguientes a la admisión de la demanda"],
+   a:0, e:"La declinatoria debe interponerse dentro de los 10 primeros días del plazo otorgado para contestar a la demanda (art. 64 LEC)."},
+
+  {b:0, q:"El Ministerio Fiscal interviene en el proceso civil, ¿en qué supuestos?",
+   o:["En todos los procesos civiles","Solo cuando hay menores, incapaces o interés público (procesos de familia, discapacidad, filiación, menores)","Nunca; su ámbito es exclusivamente penal","Solo en los procesos donde el Estado es parte"],
+   a:1, e:"En el orden civil, el MF interviene cuando hay interés público o afectan a personas especialmente vulnerables: procesos de filiación, menores, discapacidad, nulidad matrimonial y similares."},
+
+  // ── BLOQUE 2: Procesos Declarativos ──
+  {b:1, q:"¿Cuál es el criterio cuantitativo principal para elegir entre juicio verbal y juicio ordinario?",
+   o:["Verbal si la cuantía es superior a 15.000€; ordinario si es inferior","Verbal si la cuantía es igual o inferior a 15.000€; ordinario si es superior","Verbal si la cuantía es inferior a 6.000€; ordinario en el resto","La cuantía no determina el proceso; solo lo hace la materia"],
+   a:1, e:"Art. 249 y 250 LEC: el juicio verbal se aplica a pretensiones de cuantía ≤ 15.000 € (y a materias específicas del art. 250); el ordinario a las de cuantía > 15.000 € (y materias del art. 249)."},
+
+  {b:1, q:"En el juicio verbal, ¿tiene el demandado la obligación de contestar la demanda por escrito?",
+   o:["No; en el verbal hay contestación oral en la vista","Sí, en todo caso dentro de los 10 días siguientes a la citación","Sí, pero solo si la cuantía supera 6.000€","No es necesario comparecer; el juez resuelve con la demanda"],
+   a:1, e:"Tras la reforma, el juicio verbal incorpora contestación escrita en plazo de 10 días; la vista tiene lugar si existen hechos controvertidos."},
+
+  {b:1, q:"¿Cuál es el efecto principal de la declaración de rebeldía del demandado?",
+   o:["Supone allanamiento tácito a las pretensiones del actor","El proceso continúa sin el demandado; las resoluciones se notifican por edictos salvo que comparezca","Se suspende el proceso hasta que comparezca","El actor puede pedir sentencia de inmediato"],
+   a:1, e:"La rebeldía (art. 496 LEC) no implica admisión de los hechos. El proceso sigue su curso y las resoluciones se comunican al rebelde mediante edictos (tablón)."},
+
+  {b:1, q:"¿Para qué sirve la audiencia previa en el juicio ordinario?",
+   o:["Para practicar la prueba testifical y pericial","Para intentar acuerdo, sanear el proceso, fijar hechos controvertidos y proponer prueba","Para dictar sentencia de viva voz","Para resolver el recurso de reposición frente al auto de admisión"],
+   a:1, e:"La audiencia previa (art. 414 LEC) tiene cuatro funciones: conciliar a las partes, resolver cuestiones procesales, fijar los hechos controvertidos y admitir/proponer los medios de prueba."},
+
+  {b:1, q:"En el juicio monitorio, ¿cuántos días tiene el deudor para pagar u oponerse desde el requerimiento?",
+   o:["5 días","10 días","20 días","30 días"],
+   a:2, e:"Art. 815 LEC: el deudor dispone de 20 días para pagar o comparecer y oponerse. Si no hace ninguna de las dos cosas, el LAJ dicta decreto de ejecución."},
+
+  {b:1, q:"¿Cuál es el efecto de la oposición del deudor en el proceso monitorio?",
+   o:["Se archiva el proceso y el acreedor pierde la deuda","El proceso monitorio se transforma en juicio ordinario o verbal según la cuantía","El juez dicta auto desestimando la oposición directamente","El deudor queda automáticamente condenado en costas"],
+   a:1, e:"La oposición en el monitorio provoca que el proceso se transforme en el declarativo que corresponda por cuantía (verbal ≤ 15.000 € / ordinario > 15.000 €)."},
+
+  {b:1, q:"¿El proceso cambiario está excluido del requisito de los MASC como condición de procedibilidad?",
+   o:["No, también requiere intentar MASC previo","Sí, está expresamente excluido","Solo si el importe es inferior a 6.000€","Depende de si el demandado es consumidor"],
+   a:1, e:"El juicio cambiario (letra, cheque, pagaré) es uno de los procesos expresamente excluidos del requisito de MASC previo, junto con el ejecutivo, cambiario y otros tasados."},
+
+  {b:1, q:"En el proceso de desahucio por falta de pago, ¿cuántos días tiene el arrendatario para enervar la acción (pagar lo debido)?",
+   o:["5 días desde la citación","10 días desde el requerimiento previo extrajudicial","10 días desde la notificación de la demanda","20 días desde la admisión"],
+   a:2, e:"El arrendatario puede enervar el desahucio pagando o consignando la renta adeudada dentro de los 10 días siguientes a la notificación de la demanda (art. 22 LEC)."},
+
+  {b:1, q:"¿Qué diferencia el proceso matrimonial consensual del contencioso?",
+   o:["La cuantía de la pensión compensatoria","El acuerdo de ambos cónyuges sobre todas las medidas (consensual) frente a la discrepancia en alguna (contencioso)","Que el consensual no requiere abogado","Que el contencioso solo procede si hay hijos menores"],
+   a:1, e:"El proceso matrimonial consensual (mutuo acuerdo) requiere petición conjunta con convenio regulador; el contencioso lo inicia uno solo de los cónyuges cuando no hay acuerdo."},
+
+  {b:1, q:"¿Qué ley establece las medidas de apoyo a personas con discapacidad, sustituyendo la antigua incapacitación?",
+   o:["Ley 5/2012 de mediación","Ley 8/2021 por la que se reforma la legislación civil y procesal para el apoyo a las personas con discapacidad","LO 1/2025 de eficiencia del Servicio Público de Justicia","Ley 1/2000, Ley de Enjuiciamiento Civil"],
+   a:1, e:"La Ley 8/2021 suprimió la incapacitación y sustituyó el modelo de sustitución de voluntad por el de apoyos, con la curatela como figura central."},
+
+  {b:1, q:"¿Cuál es la cuantía límite para interponer una petición monitoria?",
+   o:["No tiene límite de cuantía","6.000€","15.000€","30.000€"],
+   a:0, e:"Tras la reforma de 2015, el proceso monitorio no tiene límite de cuantía (art. 812 LEC). Sirve para reclamar cualquier deuda dineraria, vencida, exigible y de cantidad determinada."},
+
+  {b:1, q:"En el juicio cambiario, ¿cuántos días tiene el deudor para oponerse desde el requerimiento de pago?",
+   o:["5 días","10 días","20 días","1 mes"],
+   a:1, e:"Art. 821 LEC: el deudor cambiario dispone de 10 días (no 20 como en el monitorio) para oponerse. Además, al despachar ejecución se traba embargo preventivo sobre sus bienes."},
+
+  {b:1, q:"¿Qué proceso utiliza el titular de la posesión que ha sido despojado para recuperarla urgentemente?",
+   o:["Juicio ordinario de dominio","Tutela sumaria de la posesión (interdicto de recobrar)","Proceso monitorio posesorio","Jurisdicción voluntaria de tutela posesoria"],
+   a:1, e:"La tutela sumaria posesoria (art. 250.1.4º LEC) permite al poseedor despojado recuperar la posesión de forma urgente mediante un juicio verbal especial, sin prejuzgar el derecho de propiedad."},
+
+  {b:1, q:"¿En qué se distingue la jurisdicción voluntaria de la contenciosa?",
+   o:["En que la JV no tiene partes ni contradicción, sino peticionarios que buscan reconocimiento o constitución de una situación jurídica","En que la JV solo la tramita el LAJ","En que la JV no admite prueba","En que la JV siempre requiere abogado"],
+   a:0, e:"La jurisdicción voluntaria (LJV) se caracteriza por la ausencia de controversia entre partes: hay peticionarios (no demandantes/demandados) y el órgano reconoce, constituye o modifica una situación jurídica."},
+
+  {b:1, q:"¿Cuáles son los requisitos de admisión de la prueba?",
+   o:["Pertinente, útil y lícita","Pertinente, necesaria y solicitada en tiempo","Escrita, oral y documentada","Solo que sea propuesta en la audiencia previa"],
+   a:0, e:"Art. 283 LEC: la prueba debe ser pertinente (relación con el objeto del proceso), útil (idónea para probar el hecho) y lícita (obtenida sin vulnerar derechos fundamentales)."},
+
+  {b:1, q:"¿Quién soporta la carga de probar los hechos impeditivos, extintivos o excluyentes de la pretensión del actor?",
+   o:["El actor","El demandado","El Ministerio Fiscal","El tribunal de oficio"],
+   a:1, e:"Art. 217.3 LEC: corresponde al demandado la carga de probar los hechos que impiden, extinguen o excluyen el efecto jurídico pretendido por el actor (ej. pago, prescripción, nulidad)."},
+
+  {b:1, q:"¿Qué son las diligencias finales?",
+   o:["Actuaciones del LAJ para la ejecución de sentencias","Actuaciones probatorias excepcionales tras el juicio oral, en supuestos tasados del art. 435 LEC","Diligencias de investigación patrimonial en ejecución","Los actos de comunicación posteriores a la sentencia"],
+   a:1, e:"Las diligencias finales (art. 435 LEC) son pruebas que el tribunal puede acordar de oficio o a petición de parte tras la vista/juicio, solo en casos tasados: hechos nuevos o imposibilidad anterior de practicar la prueba."},
+
+  {b:1, q:"¿Qué valor probatorio tienen los documentos públicos no impugnados?",
+   o:["Ninguno; siempre requieren ratificación pericial","Plena prueba del hecho y fecha de su otorgamiento","Solo son indicios","Igual que los documentos privados"],
+   a:1, e:"Los documentos públicos (art. 319 LEC) hacen plena prueba del hecho, acto o estado de cosas que documenten y de la fecha y el notario o funcionario que los autorice, salvo impugnación y prueba en contrario."},
+
+  {b:1, q:"¿Qué proceso especial se emplea para adoptar medidas de apoyo a una persona con discapacidad en vía contenciosa?",
+   o:["Juicio ordinario por cuantía inestimada","Proceso especial de los arts. 756-762 LEC","Expediente de jurisdicción voluntaria del art. 42 bis LJV","Juicio verbal de tutela sumaria"],
+   a:1, e:"Los arts. 756-762 LEC regulan el proceso contencioso de medidas de apoyo (antes denominado incapacitación), con reglas especiales de legitimación, prueba pericial preceptiva y audiencia de la persona afectada."},
+
+  // ── BLOQUE 3: Ejecución y Cautelares ──
+  {b:2, q:"¿Cuáles son los títulos ejecutivos judiciales?",
+   o:["Solo las sentencias firmes de condena","Sentencias y autos firmes de condena, resoluciones judiciales que aprueben transacciones o acuerdos, y laudos arbitrales","Cualquier resolución judicial, incluidas las no firmes","Solo las sentencias del Tribunal Supremo"],
+   a:1, e:"Art. 517 LEC enumera los títulos ejecutivos; los judiciales incluyen sentencias/autos firmes de condena, resoluciones que aprueben acuerdos procesales, y los laudos. Los notariales y otros son títulos no judiciales."},
+
+  {b:2, q:"¿Qué resolución despacha la ejecución y quién la dicta?",
+   o:["Auto del juez que despacha la ejecución y decreto del LAJ que concreta las medidas","Solo el juez mediante auto que incluye todas las medidas","Solo el LAJ mediante decreto","Sentencia del tribunal de apelación"],
+   a:0, e:"Art. 551 LEC: el juez dicta auto despachando ejecución y a continuación el LAJ dicta decreto con las medidas ejecutivas concretas (embargo de bienes, etc.)."},
+
+  {b:2, q:"¿Cuántos días tiene el ejecutado para oponerse al despacho de ejecución?",
+   o:["5 días","10 días","20 días","1 mes"],
+   a:1, e:"Art. 556 LEC: el ejecutado dispone de 10 días desde la notificación del auto de despacho para formular oposición a la ejecución."},
+
+  {b:2, q:"¿Cuál es el orden de prelación en el embargo de bienes del ejecutado?",
+   o:["Inmuebles primero, por su mayor valor","Dinero en efectivo o cuentas bancarias en primer lugar, luego créditos y valores, y subsidiariamente bienes muebles e inmuebles","Bienes muebles primero por ser más fáciles de embargar","El acreedor elige libremente el orden"],
+   a:1, e:"Art. 592 LEC: la ley establece un orden de prelación que encabeza el dinero efectivo y depósitos bancarios, seguido de créditos, valores mobiliarios, joyas, bienes muebles y finalmente inmuebles."},
+
+  {b:2, q:"En la ejecución dineraria, ¿cuánto se reserva adicionalmente al principal para intereses y costas?",
+   o:["10% del principal","20% del principal","30% del principal","50% del principal"],
+   a:2, e:"Art. 575 LEC: al despachar ejecución se incluye el principal más un 30% adicional para intereses devengados y costas de ejecución."},
+
+  {b:2, q:"En la ejecución hipotecaria, ¿qué documento debe aportar el ejecutante junto a la demanda para acreditar que la deuda está vencida?",
+   o:["Escritura de compraventa del inmueble","Certificación registral de la hipoteca y de los titulares registrales","Tasación del inmueble","Solo la escritura de hipoteca notarial"],
+   a:1, e:"En la ejecución hipotecaria (art. 685 LEC) se requiere la certificación del Registro de la Propiedad que acredite la titularidad de la finca, la hipoteca y los posibles titulares de cargas posteriores."},
+
+  {b:2, q:"¿Cuáles son los motivos de oposición tasados en la ejecución hipotecaria (art. 695 LEC)?",
+   o:["Cualquier causa de oposición del derecho común","Solo la prescripción de la acción hipotecaria","Extinción de la garantía o de la obligación garantizada, error en la determinación de la cantidad exigible, y cláusulas abusivas","Falsedad del título y plus petición"],
+   a:2, e:"El art. 695 LEC lista taxativamente: extinción de la garantía o de la obligación, error en la cantidad exigible, y existencia de cláusula abusiva que sea la base de la ejecución o determine la cantidad exigible."},
+
+  {b:2, q:"¿Qué presupuesto cautelar es el 'fumus boni iuris'?",
+   o:["El peligro de que la demora frustre la tutela judicial","La apariencia de buen derecho: indicios razonables de que el solicitante tiene razón en el fondo","La caución o garantía que debe prestar el solicitante","La urgencia de la medida"],
+   a:1, e:"Fumus boni iuris (humo de buen derecho) es la apariencia de que la pretensión del solicitante es fundada, sin que sea necesaria certeza plena (reservada para la sentencia definitiva)."},
+
+  {b:2, q:"¿Cuándo puede adoptarse una medida cautelar sin audiencia previa al demandado?",
+   o:["Nunca; siempre se requiere audiencia previa","Cuando la audiencia previa comprometería la eficacia de la medida (urgencia o peligro de ocultación)","Siempre que el actor lo solicite","Cuando la cuantía sea inferior a 6.000€"],
+   a:1, e:"Las medidas cautelares se adoptan con audiencia como regla general. La excepción (inaudita parte) procede cuando oír al demandado antes podría frustrar la eficacia de la medida (ej. riesgo de ocultación de bienes)."},
+
+  {b:2, q:"¿Qué característica esencial diferencia las medidas cautelares de la ejecución definitiva?",
+   o:["Las cautelares son permanentes; la ejecución es temporal","Las cautelares son provisionales e instrumentales (sirven al proceso principal); la ejecución es el cumplimiento forzoso de la sentencia firme","Las cautelares solo afectan a bienes inmuebles","La ejecución la tramita el LAJ; las cautelares, siempre el juez"],
+   a:1, e:"Las medidas cautelares son provisionales (cesan con la sentencia firme), instrumentales (dependen del proceso principal) y modificables. La ejecución forzosa es el mecanismo definitivo de cumplimiento del título."},
+
+  {b:2, q:"¿Qué es la ejecución provisional de sentencias no firmes?",
+   o:["No existe; solo se ejecutan sentencias firmes","Permite ejecutar sentencias de primera instancia recurridas en apelación, a instancia del favorecido y sin que el recurrente pueda oponerse salvo en casos tasados","Solo procede cuando la sentencia condena a pagar dinero","La puede acordar el LAJ de oficio"],
+   a:1, e:"Arts. 524-537 LEC: la ejecución provisional permite ejecutar sentencias de primera instancia pendientes de recurso de apelación. La oposición del ejecutado es muy limitada (solo cabe si la ejecución produciría situaciones imposibles de revertir)."},
+
+  {b:2, q:"En la ejecución no dineraria de un hacer personalísimo, ¿qué ocurre si el ejecutado se niega?",
+   o:["Se le condena en rebeldía","No puede compelerse porque es una obligación personal","El tribunal puede imponer multas coercitivas periódicas y, si persiste, resarcir al ejecutante con indemnización de daños","Se suspende el proceso hasta que cumpla voluntariamente"],
+   a:2, e:"En las obligaciones personalísimas (art. 709 LEC), si el ejecutado se niega, el tribunal puede imponer multas coercitivas. Si aun así se resiste, se transforma en ejecución dineraria por equivalente (indemnización de daños)."},
+
+  {b:2, q:"¿Qué tipo de título ejecutivo es la escritura pública notarial de préstamo hipotecario?",
+   o:["Título ejecutivo judicial","Título ejecutivo no judicial","No es título ejecutivo; requiere proceso declarativo previo","Es un título cambiario"],
+   a:1, e:"La escritura pública notarial es un título ejecutivo no judicial (extrajudicial) conforme al art. 517.2.4º LEC, lo que permite directamente instar la ejecución sin previo proceso declarativo."},
+
+  {b:2, q:"¿Qué es el embargo preventivo en el proceso cambiario?",
+   o:["Una medida cautelar opcional que el acreedor puede solicitar","Un embargo que se traba automáticamente al despachar ejecución cambiaria, como garantía del crédito cambiario","Una medida de aseguramiento de bienes inmuebles exclusivamente","Un embargo que decreta el LAJ sin intervención del juez"],
+   a:1, e:"En el proceso cambiario (art. 821 LEC), al despachar la ejecución el tribunal traba embargo preventivo sobre bienes del deudor por la cantidad reclamada más intereses y costas, sin necesidad de fianza."},
+
+  {b:2, q:"¿Cuál es el carácter de la caución en las medidas cautelares?",
+   o:["Voluntaria; solo si el juez lo considera oportuno","Obligatoria; el solicitante debe prestarla para responder de los daños si la medida resulta injustificada","Solo se exige cuando la cuantía supera 6.000€","Solo se exige al demandado, no al demandante"],
+   a:1, e:"La caución (tercer presupuesto cautelar) es obligatoria: el solicitante debe garantizar el resarcimiento de los daños que la medida pueda causar si finalmente resulta infundada o el proceso se pierde."},
+
+  // ── BLOQUE 4: Terminación y Costas ──
+  {b:3, q:"¿En qué se diferencian la renuncia y el desistimiento?",
+   o:["Son idénticos; solo cambia el nombre según la fase procesal","La renuncia afecta al derecho material (extingue definitivamente la acción); el desistimiento solo abandona el proceso concreto (puede volverse a demandar)","El desistimiento extingue el derecho; la renuncia solo el proceso","La renuncia la realiza el juez; el desistimiento, el actor"],
+   a:1, e:"Renuncia (art. 20 LEC): el actor abdica del derecho sustantivo que fundamenta la pretensión → cosa juzgada, no puede volver a demandar. Desistimiento (art. 20 LEC): abandona solo ese proceso, pero el derecho subsiste."},
+
+  {b:3, q:"¿Qué es el allanamiento y qué poder necesita el procurador para realizarlo?",
+   o:["Es la aceptación del actor de las excepciones del demandado; no requiere poder especial","Es el reconocimiento del demandado de la pretensión del actor; requiere poder especial del cliente","Es el acuerdo de ambas partes; solo requiere firma del abogado","Es sinónimo de transacción"],
+   a:1, e:"El allanamiento (art. 21 LEC) es el acto del demandado que acepta las pretensiones del actor. Dado su carácter dispositivo, el procurador necesita poder especial del cliente para allanarse."},
+
+  {b:3, q:"¿Cuál es el plazo de caducidad de la instancia en primera instancia?",
+   o:["6 meses","1 año","2 años","4 años"],
+   a:2, e:"Art. 237 LEC: la caducidad de la instancia en primera instancia opera si el proceso queda paralizado por inactividad de las partes durante 2 años. En segunda instancia el plazo es de 1 año."},
+
+  {b:3, q:"¿Opera la caducidad de la instancia en el proceso de ejecución?",
+   o:["Sí, en el mismo plazo que en primera instancia (2 años)","No, la ejecución no caduca por inactividad de las partes","Sí, pero el plazo es de 5 años","Solo caduca si el ejecutante no insta la ejecución en 1 año"],
+   a:1, e:"Art. 239 LEC: la caducidad de la instancia no opera en la fase de ejecución, pues el proceso ejecutivo no puede extinguirse por inactividad de las partes una vez despachada la ejecución."},
+
+  {b:3, q:"¿Qué es la satisfacción extraprocesal o pérdida sobrevenida del objeto?",
+   o:["Una forma de terminación anormal cuando desaparece el interés legítimo del actor porque la pretensión se ha satisfecho fuera del proceso","Una resolución judicial de fondo por la que se estima la demanda","El sobreseimiento del proceso por muerte del actor","La caducidad especial del proceso de ejecución"],
+   a:0, e:"Art. 22 LEC: si la pretensión del actor queda satisfecha por actos externos al proceso (ej. el demandado paga voluntariamente), el proceso termina por pérdida sobrevenida del objeto, sin que haya sentencia de condena."},
+
+  {b:3, q:"¿Qué cuantía fija la LEC para los procesos de cuantía indeterminada o inestimable a efectos de tasas judiciales?",
+   o:["6.000€","12.000€","18.000€","30.000€"],
+   a:2, e:"A efectos del cálculo de la tasa judicial, cuando la cuantía del proceso es indeterminada o inestimable, se toma como referencia 18.000 € (art. 6 Ley 10/2012 de tasas judiciales)."},
+
+  {b:3, q:"¿Están sujetas las personas físicas al pago de tasas judiciales?",
+   o:["Sí, siempre que la cuantía supere 2.000€","No, las personas físicas están exentas del pago de tasas judiciales","Sí, pero con tarifa reducida del 50%","Depende de su nivel de renta"],
+   a:1, e:"La Ley 10/2012 exime completamente a las personas físicas del pago de tasas judiciales. Solo las personas jurídicas (sociedades) están obligadas a satisfacerlas."},
+
+  {b:3, q:"¿Cuál es el importe fijo de la tasa judicial para el juicio ordinario?",
+   o:["100€","150€","300€","600€"],
+   a:2, e:"La tasa fija para el juicio ordinario es de 300 €; para el verbal, 150 €; para el monitorio, 100 €. A estas cuotas fijas se añade una parte variable según la cuantía."},
+
+  {b:3, q:"¿Qué criterio rige la condena en costas en primera instancia como regla general?",
+   o:["El vencimiento objetivo: quien pierde el pleito paga las costas","El arbitrio judicial en todo caso","Solo se imponen costas si hay mala fe o temeridad","Las costas siempre se compensan entre las partes"],
+   a:0, e:"Art. 394 LEC: el principio del vencimiento objetivo impone las costas al litigante cuyas pretensiones fueron íntegramente desestimadas, salvo que el caso presentara serias dudas de hecho o de derecho."},
+
+  {b:3, q:"¿Qué es la mora procesal y cómo se calcula el tipo de interés?",
+   o:["El retraso del LAJ en notificar; se calcula al tipo legal del dinero","El devengo de intereses desde la sentencia de primera instancia; tipo legal del dinero + 2 puntos","Los intereses que devenga el capital durante el proceso; tipo pactado en contrato","Solo aplica en ejecuciones hipotecarias; tipo Euribor + 2"],
+   a:1, e:"Art. 576 LEC: desde que se dicta sentencia de primera instancia, si no se paga voluntariamente, devengándose interés de mora procesal = tipo legal del dinero + 2 puntos porcentuales."},
+
+  {b:3, q:"¿Suspende la solicitud de justicia gratuita el curso del proceso?",
+   o:["Sí, siempre","No, el proceso continúa mientras se resuelve la solicitud","Solo suspende el plazo para contestar la demanda","Solo suspende si la solicita el demandado"],
+   a:1, e:"La solicitud de reconocimiento del derecho a la justicia gratuita no suspende el proceso (art. 16 Ley 1/1996). El proceso sigue su curso y, si se deniega, el solicitante debe asumir los gastos ya ocasionados."},
+
+  {b:3, q:"¿Cuántos días tiene la Comisión de Asistencia Jurídica Gratuita para resolver la solicitud de justicia gratuita?",
+   o:["5 días","15 días","30 días","2 meses"],
+   a:1, e:"El art. 17 Ley 1/1996 fija un plazo de 15 días hábiles para que la Comisión de Asistencia Jurídica Gratuita resuelva la solicitud. Transcurrido ese plazo sin resolución, se entiende concedida por silencio positivo."},
+
+  {b:3, q:"¿Cuál es el plazo de caducidad de la instancia en segunda instancia?",
+   o:["6 meses","1 año","2 años","3 años"],
+   a:1, e:"Art. 237 LEC: en segunda instancia (recurso de apelación), la caducidad opera por inactividad de las partes durante 1 año (la mitad que en primera instancia)."},
+
+  {b:3, q:"En los MASC, ¿qué efecto tiene rechazar sin causa justificada una propuesta que luego coincide con la sentencia?",
+   o:["Ningún efecto procesal","Puede determinar la pérdida del derecho a que la contraparte sea condenada en costas o incluso una condena en costas propia","Conlleva multa por temeridad","Solo se tiene en cuenta si hay recurso de apelación"],
+   a:1, e:"LO 1/2025: si una parte rechaza sin justificación una propuesta de MASC que luego resulta coincidente o más favorable que la sentencia, el tribunal puede moderar o privar a esa parte del beneficio de costas."},
+
+  {b:3, q:"¿En qué consiste la transacción como forma de terminación del proceso?",
+   o:["El acuerdo del demandado con las pretensiones del actor (allanamiento)","El acuerdo de ambas partes sobre las pretensiones controvertidas, homologado judicialmente, con fuerza ejecutiva","El abandono del proceso por el actor (desistimiento)","La renuncia del actor al derecho material"],
+   a:1, e:"La transacción (art. 19 LEC) es el acuerdo bilateral por el que ambas partes se conceden recíprocas concesiones. Homologada por el tribunal, tiene fuerza ejecutiva equivalente a una sentencia."},
+
+  {b:3, q:"¿Cuál es el plazo de caducidad de la instancia en los expedientes de jurisdicción voluntaria?",
+   o:["2 años","1 año","6 meses","3 meses"],
+   a:2, e:"En los expedientes de jurisdicción voluntaria el plazo de caducidad es de 6 meses de inactividad, frente a los 2 años de primera instancia o 1 año de segunda instancia contenciosa."},
+
+  {b:3, q:"¿Qué es la condena en costas y qué incluye?",
+   o:["Solo los honorarios del abogado de la parte vencedora","Los gastos del proceso: honorarios de abogado y procurador, tasas judiciales, peritajes y demás gastos necesarios causados en el proceso","Solo las tasas judiciales abonadas","Los gastos de notaría previos al proceso"],
+   a:1, e:"La condena en costas (art. 241 LEC) abarca todos los gastos necesarios causados en el proceso: honorarios del abogado y procurador de la parte vencedora, tasas judiciales, peritajes, notarías y demás gastos procesales."},
+];
+
+// ===== ESTADO =====
+let selectedBlock = null;
+let selectedNum = 10;
+let currentQuestions = [];
+let currentIdx = 0;
+let score = 0;
+let answered = false;
+let wrongAnswers = [];
+let isRepeat = false;
+
+const BLOCK_NAMES = ['Bloque 1: Jurisdicción','Bloque 2: Declarativos','Bloque 3: Ejecución','Bloque 4: Terminación','Test General'];
+
+// ===== HOME =====
+function selectBlock(b) {
+  selectedBlock = b;
+  document.querySelectorAll('.block-card, .general-card').forEach(el => el.style.borderColor='');
+  if (b >= 0) {
+    document.querySelectorAll('.block-card')[b].style.borderColor = 'var(--primary)';
+  } else {
+    document.querySelector('.general-card').style.borderColor = 'var(--green)';
+  }
+  const btn = document.getElementById('start-btn');
+  btn.disabled = false;
+  btn.textContent = '▶ Comenzar test';
+}
+
+function selectNum(el, n) {
+  selectedNum = n;
+  document.querySelectorAll('.num-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  if (selectedBlock === null) return;
+  const pool = selectedBlock === -1 ? QUESTIONS : QUESTIONS.filter(q => q.b === selectedBlock);
+  const shuffled = shuffle(pool);
+  currentQuestions = selectedNum === 0 ? shuffled : shuffled.slice(0, Math.min(selectedNum, shuffled.length));
+  currentIdx = 0;
+  score = 0;
+  wrongAnswers = [];
+  showScreen('quiz');
+  renderQuestion();
+}
+
+// ===== QUIZ =====
+function renderQuestion() {
+  const q = currentQuestions[currentIdx];
+  answered = false;
+
+  document.getElementById('q-counter').textContent = `${currentIdx+1} / ${currentQuestions.length}`;
+  document.getElementById('q-bloque').textContent = BLOCK_NAMES[q.b];
+  document.getElementById('progress-fill').style.width = `${(currentIdx/currentQuestions.length)*100}%`;
+  document.getElementById('score-live').textContent = score;
+  document.getElementById('question-text').textContent = q.q;
+
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.o.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<strong>${letters[i]}.</strong> ${opt}`;
+    div.onclick = () => answer(i);
+    container.appendChild(div);
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.style.display = 'none';
+
+  const nb = document.getElementById('next-btn');
+  nb.className = 'next-btn';
+  nb.textContent = currentIdx < currentQuestions.length-1 ? 'Siguiente →' : 'Ver resultado';
+}
+
+function answer(idx) {
+  if (answered) return;
+  answered = true;
+  const q = currentQuestions[currentIdx];
+  const opts = document.querySelectorAll('.option');
+  opts.forEach(o => o.classList.add('disabled'));
+
+  const correct = idx === q.a;
+  opts[idx].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) {
+    opts[q.a].classList.add('correct');
+    wrongAnswers.push({q, chosen: idx});
+  } else {
+    score++;
+  }
+
+  document.getElementById('score-live').textContent = score;
+
+  const fb = document.getElementById('feedback');
+  fb.style.display = 'block';
+  fb.className = `feedback show ${correct ? 'ok' : 'ko'}`;
+  document.getElementById('feedback-title').textContent = correct ? '✓ ¡Correcto!' : '✗ Incorrecto';
+  document.getElementById('feedback-body').textContent = q.e;
+
+  const nb = document.getElementById('next-btn');
+  nb.className = 'next-btn show';
+  nb.textContent = currentIdx < currentQuestions.length-1 ? 'Siguiente →' : 'Ver resultado';
+}
+
+function nextQuestion() {
+  currentIdx++;
+  if (currentIdx >= currentQuestions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+    document.getElementById('screen-quiz').scrollTop = 0;
+  }
+}
+
+// ===== RESULT =====
+function showResult() {
+  const total = currentQuestions.length;
+  const pct = Math.round((score/total)*100);
+  const emoji = pct >= 80 ? '🏆' : pct >= 60 ? '🎯' : pct >= 40 ? '📚' : '💪';
+  const label = pct >= 80 ? '¡Excelente resultado!' : pct >= 60 ? 'Buen trabajo' : pct >= 40 ? 'Sigue practicando' : 'A estudiar más';
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-pct').textContent = pct+'%';
+  document.getElementById('res-label').textContent = label;
+  document.getElementById('res-ok').textContent = score;
+  document.getElementById('res-ko').textContent = total-score;
+
+  const reviewSection = document.getElementById('review-section');
+  if (wrongAnswers.length > 0) {
+    reviewSection.style.display = 'flex';
+    reviewSection.style.flexDirection = 'column';
+    reviewSection.style.gap = '10px';
+    const list = document.getElementById('review-list');
+    list.innerHTML = '';
+    const letters = ['A','B','C','D'];
+    wrongAnswers.forEach(({q, chosen}) => {
+      const div = document.createElement('div');
+      div.className = 'review-item';
+      div.innerHTML = `
+        <div class="rq">${q.q}</div>
+        <div class="ra wrong">✗ Tu respuesta: ${letters[chosen]}. ${q.o[chosen]}</div>
+        <div class="ra correct">✓ Correcta: ${letters[q.a]}. ${q.o[q.a]}</div>
+        <div class="exp">${q.e}</div>
+      `;
+      list.appendChild(div);
+    });
+  } else {
+    reviewSection.style.display = 'none';
+  }
+
+  showScreen('result');
+}
+
+function repeatQuiz() {
+  const pool = currentQuestions;
+  currentQuestions = shuffle([...pool]);
+  currentIdx = 0;
+  score = 0;
+  wrongAnswers = [];
+  showScreen('quiz');
+  renderQuestion();
+}
+
+// ===== NAVIGATION =====
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  document.getElementById('screen-'+name).scrollTop = 0;
+}
+
+function goHome() {
+  showScreen('home');
+}
+
+// ===== SERVICE WORKER =====
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
