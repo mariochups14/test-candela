@@ -1,7 +1,7 @@
 {
-  "name": "Test Candela — Procesal Civil",
+  "name": "Test Candela — Derecho Procesal",
   "short_name": "Test Candela",
-  "description": "Test de oposiciones de Derecho Procesal Civil",
+  "description": "Test de oposiciones de Derecho Procesal: Civil, Penal, Contencioso y Social",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",

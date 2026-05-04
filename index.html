@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#0f172a">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.svg">
-<title>Test Candela — Procesal Civil</title>
+<title>Test Candela — Derecho Procesal</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   :root{
@@ -141,30 +141,49 @@
     <div class="logo">
       <div class="logo-icon">⚖️</div>
       <h1>Test Candela</h1>
-      <p>Derecho Procesal Civil</p>
+      <p>Civil · Penal · Contencioso · Social</p>
     </div>
 
-    <p class="section-title">Por bloques</p>
+    <p class="section-title">Bloque I — Jurisdicción Civil</p>
     <div class="block-grid">
       <div class="block-card" id="bc0" onclick="selectBlock(0)">
-        <span class="badge">Bloque 1</span>
+        <span class="badge">Civil 1</span>
         <h3>Jurisdicción y Competencia</h3>
         <p>LAJ, órganos, postulación, plazos</p>
       </div>
       <div class="block-card" id="bc1" onclick="selectBlock(1)">
-        <span class="badge">Bloque 2</span>
+        <span class="badge">Civil 2</span>
         <h3>Procesos Declarativos</h3>
         <p>Verbal, ordinario, especiales, familia</p>
       </div>
       <div class="block-card" id="bc2" onclick="selectBlock(2)">
-        <span class="badge">Bloque 3</span>
+        <span class="badge">Civil 3</span>
         <h3>Ejecución y Cautelares</h3>
         <p>Títulos, embargo, hipotecaria</p>
       </div>
       <div class="block-card" id="bc3" onclick="selectBlock(3)">
-        <span class="badge">Bloque 4</span>
+        <span class="badge">Civil 4</span>
         <h3>Terminación y Costas</h3>
         <p>Crisis procesales, tasas, MASC</p>
+      </div>
+    </div>
+
+    <p class="section-title">Bloques II · III · IV</p>
+    <div class="block-grid">
+      <div class="block-card" id="bc4" onclick="selectBlock(4)">
+        <span class="badge">Bloque II</span>
+        <h3>Jurisdicción Penal</h3>
+        <p>Órganos, competencia, procedimientos</p>
+      </div>
+      <div class="block-card" id="bc5" onclick="selectBlock(5)">
+        <span class="badge">Bloque III</span>
+        <h3>Contencioso-Adm.</h3>
+        <p>Ley 39/2015, silencio, recursos</p>
+      </div>
+      <div class="block-card" id="bc6" onclick="selectBlock(6)" style="grid-column:1/-1">
+        <span class="badge">Bloque IV</span>
+        <h3>Jurisdicción Social</h3>
+        <p>LJS, conciliación, despido, suplicación</p>
       </div>
     </div>
 
@@ -519,10 +538,196 @@ const QUESTIONS = [
   {b:3,q:"¿Qué sucede con las costas de segunda instancia cuando se desestima el recurso de apelación?",
    o:["No hay condena en costas en segunda instancia","Las costas de la apelación se imponen al apelante cuyo recurso fue desestimado","Las costas se imponen siempre al apelado","Se compensan automáticamente entre las partes"],a:1,
    e:"Art. 398 LEC: cuando se desestima el recurso de apelación, las costas de la segunda instancia se imponen al apelante. Si se estima parcialmente, el tribunal puede no imponer costas o compensarlas."},
+
+  // ── BLOQUE II — JURISDICCIÓN PENAL (b:4, 20 preguntas) ──
+  {b:4,q:"¿Qué límite de pena determina la competencia de la Sección de lo Penal del Tribunal de Instancia?",
+   o:["Penas no superiores a 3 años de prisión","Penas privativas de libertad no superiores a 5 años o penas de otra naturaleza no superiores a 10 años","Penas no superiores a 9 años de prisión","Penas no superiores a 2 años de prisión"],a:1,
+   e:"La Sección de lo Penal conoce delitos con pena privativa de libertad no superior a 5 años, pena de multa de cualquier cuantía, o penas de otra naturaleza (inhabilitación, etc.) no superiores a 10 años. Los delitos más graves van a la Audiencia Provincial."},
+  {b:4,q:"¿Cuál es la regla general de competencia territorial en el proceso penal?",
+   o:["El domicilio del acusado","El lugar donde se ha cometido el delito","El domicilio de la víctima","El lugar donde fue detenido el investigado"],a:1,
+   e:"La regla general es el lugar de comisión del delito (forum delicti commissi). Si no consta, se aplican reglas subsidiarias por este orden: lugar de descubrimiento de pruebas, lugar de detención, residencia del presunto reo, y cualquier órgano que haya tenido noticia del delito."},
+  {b:4,q:"¿Qué norma regula el servicio de guardia de los juzgados de instrucción en todo el territorio nacional?",
+   o:["Ley de Enjuiciamiento Criminal","Reglamento 1/2005 del Consejo General del Poder Judicial","Ley Orgánica del Poder Judicial","Real Decreto de organización judicial"],a:1,
+   e:"El servicio de guardia se regula por el Reglamento 1/2005 del CGPJ. El juzgado o sección de guardia recibe atestados, practica primeras diligencias, resuelve sobre la situación del detenido, celebra juicios inmediatos por delitos leves y tramita diligencias urgentes."},
+  {b:4,q:"En la jurisdicción de menores, ¿qué figura dirige la investigación y qué figura autoriza las medidas que afectan a derechos fundamentales?",
+   o:["El juez de menores dirige la investigación; el Fiscal controla las medidas","El Fiscal dirige la investigación; el juez de garantías autoriza las medidas limitativas de derechos fundamentales","El LAJ dirige la investigación; el juez dicta la sentencia","Juez y Fiscal actúan conjuntamente en todas las fases"],a:1,
+   e:"En menores, el Ministerio Fiscal tiene función investigadora. Cuando se pretende limitar derechos fundamentales (libertad, domicilio, comunicaciones) es necesaria autorización del juez de garantías. La única medida limitadora que el Fiscal puede adoptar sin intervención judicial es la detención."},
+  {b:4,q:"¿Qué función cumple el proceso de habeas corpus?",
+   o:["Recurso ordinario contra sentencias penales","Control judicial inmediato de privaciones de libertad que se consideran ilegales o indebidas","Procedimiento para revisar sentencias firmes","Mecanismo de extradición entre Estados"],a:1,
+   e:"El habeas corpus (LO 6/1984) permite a quien está privado de libertad de forma presuntamente ilegal ser puesto ante el juez para que este verifique la legalidad de la detención. Lo tramitan las secciones de instrucción y las de guardia."},
+  {b:4,q:"¿Qué procedimiento penal se aplica a delitos con pena privativa de libertad no superior a 9 años?",
+   o:["Proceso ordinario (sumario)","Procedimiento abreviado","Juicio por delitos leves","Juicio rápido"],a:1,
+   e:"El procedimiento abreviado (arts. 757 y ss. LECrim) aplica a delitos con pena privativa de libertad no superior a 9 años. El proceso ordinario (sumario) se reserva para los delitos castigados con penas superiores a 9 años."},
+  {b:4,q:"¿Qué criterio especial de competencia territorial aplica la Sección de Violencia sobre la Mujer en determinados delitos?",
+   o:["El lugar de comisión del delito, igual que en el resto del proceso penal","El domicilio de la víctima","El domicilio del presunto agresor","El domicilio del Ministerio Fiscal actuante"],a:1,
+   e:"En determinados delitos de su competencia, la Sección de VSM se rige por el domicilio de la víctima (no por el lugar del delito). Esta regla especial busca facilitar el acceso de la víctima al órgano más cercano a su entorno."},
+  {b:4,q:"¿Cuántos peritos son necesarios como mínimo para practicar un reconocimiento pericial en el sumario (proceso ordinario)?",
+   o:["Siempre uno solo","Dos, salvo que en el lugar solo haya uno disponible","Tres como mínimo","Los que el juez determine libremente"],a:1,
+   e:"En el sumario, cualquier reconocimiento pericial debe hacerlo como mínimo dos peritos. La excepción se da cuando en el lugar solo hay uno disponible. En el procedimiento abreviado puede ser suficiente un solo perito."},
+  {b:4,q:"¿A quién corresponde el ofrecimiento de acciones al ofendido en el proceso penal?",
+   o:["Al Ministerio Fiscal exclusivamente","Al LAJ, que informa al ofendido de su derecho a ser parte, a la restitución, reparación e indemnización","Al abogado defensor del investigado","A la Policía Judicial únicamente"],a:1,
+   e:"El ofrecimiento de acciones corresponde al LAJ, que debe informar al ofendido de su derecho a personarse como acusación particular, a no renunciar a la restitución de la cosa y a reclamar la reparación del daño e indemnización por perjuicios."},
+  {b:4,q:"¿Qué es el Estatuto de la víctima del delito (Ley 4/2015)?",
+   o:["Una ley que solo ampara a víctimas de violencia de género","Una norma que amplía los derechos de las víctimas, permitiéndoles recibir notificaciones y recurrir resoluciones aunque no sean parte","El reglamento interno de las oficinas de atención a víctimas","Una circular del Ministerio Fiscal sobre protección de víctimas"],a:1,
+   e:"El Estatuto de la víctima del delito (Ley 4/2015) garantiza a las víctimas el derecho a ser informadas de las resoluciones del proceso (sobreseimiento, sentencia, ejecución) y la posibilidad de recurrir determinadas resoluciones aunque no se hayan personado como parte."},
+  {b:4,q:"¿Cuáles son las personas dispensadas de declarar como testigos en el proceso penal?",
+   o:["Todos los familiares del investigado sin excepción","Ascendientes, descendientes, cónyuge, hermanos y colaterales hasta segundo grado del procesado","Solo el cónyuge del investigado","Los abogados defensores y los peritos del caso"],a:1,
+   e:"Están dispensados los parientes más cercanos del procesado: ascendientes y descendientes directos, cónyuge o pareja análoga, hermanos consanguíneos o uterinos y colaterales consanguíneos hasta segundo grado. La dispensa no aplica en supuestos tasados (ej. cuando el testigo es representante legal de una víctima menor)."},
+  {b:4,q:"¿Qué delitos son competencia del Tribunal del Jurado?",
+   o:["Delitos de tráfico de drogas y robo con violencia","Homicidio y asesinato consumados, cohecho, malversación, tráfico de influencias y otros delitos tasados en la LO 5/1995","Delitos contra la hacienda pública","Todos los delitos dolosos castigados con más de 5 años"],a:1,
+   e:"El Tribunal del Jurado (LO 5/1995) conoce de un catálogo cerrado y tasado que incluye: homicidio/asesinato consumados, amenazas, omisión del deber de socorro, allanamiento, cohecho, tráfico de influencias, malversación, negociaciones prohibidas a funcionarios, entre otros."},
+  {b:4,q:"¿Quién tiene reconocido el derecho a la asistencia jurídica gratuita de forma inmediata, sin acreditar insuficiencia de recursos?",
+   o:["Todos los ciudadanos españoles sin excepción","Víctimas de violencia de género, terrorismo, trata de seres humanos, menores víctimas de abuso y personas con discapacidad psíquica víctimas de maltrato","Todos los acusados en causas penales","Las personas jurídicas sin ánimo de lucro"],a:1,
+   e:"La Ley 1/1996 reconoce el derecho de forma inmediata e independiente de recursos a: víctimas de violencia de género, terrorismo, trata de seres humanos, menores víctimas de abuso o maltrato y personas con discapacidad psíquica víctimas de maltrato."},
+  {b:4,q:"¿Cuál es la función principal de la Sección de Vigilancia Penitenciaria?",
+   o:["Instruir causas por delitos cometidos en prisiones","Controlar la ejecución de penas privativas de libertad y medidas de seguridad, y amparar los derechos de los internos","Dictar sentencias por delitos graves","Tramitar recursos de apelación en materia penitenciaria"],a:1,
+   e:"La Sección de Vigilancia Penitenciaria controla la ejecución de penas privativas de libertad y medidas de seguridad, ejerce el control jurisdiccional sobre la potestad disciplinaria penitenciaria y ampara los derechos y beneficios de los internos."},
+  {b:4,q:"¿Qué principio garantiza que el investigado no debe probar su inocencia y que la duda le favorece?",
+   o:["Principio de legalidad penal","Presunción de inocencia (art. 24.2 CE)","Principio acusatorio","Principio de oralidad e inmediación"],a:1,
+   e:"La presunción de inocencia (art. 24.2 CE) implica que es la acusación quien debe destruirla con prueba de cargo suficiente. La duda razonable favorece siempre al acusado (in dubio pro reo). Solo queda destruida por sentencia condenatoria firme."},
+  {b:4,q:"¿Cuál de estos sujetos puede iniciar el proceso penal?",
+   o:["Solo la víctima directa del delito","Solo el Ministerio Fiscal","El Ministerio Fiscal, la Policía Judicial, el Juez de Instrucción de oficio, o cualquier ciudadano mediante querella o denuncia","Solo la Policía Judicial mediante atestado"],a:2,
+   e:"El proceso penal puede iniciarse por: atestado policial, denuncia (cualquier ciudadano o Administración), querella (acusación particular), de oficio por el juez de instrucción, o a instancia del Ministerio Fiscal. Esta pluralidad refleja el carácter mixto del sistema acusatorio español."},
+  {b:4,q:"¿Qué conoce la Sala de lo Civil y Penal del TSJ en materia penal?",
+   o:["Todas las apelaciones contra sentencias de juzgados de instrucción de la CCAA","Causas penales de aforados autonómicos, recursos de apelación contra sentencias de AP en primera instancia y cuestiones de competencia en la CCAA","Solo causas de terrorismo en el ámbito autonómico","Causas de menores en toda la comunidad autónoma"],a:1,
+   e:"La Sala de lo Civil y Penal del TSJ conoce: causas penales reservadas por estatutos de autonomía, instrucción y resolución de causas contra jueces/fiscales de la CCAA, recursos de apelación contra sentencias de Audiencias Provinciales en primera instancia y cuestiones de competencia entre órganos penales de la CCAA."},
+  {b:4,q:"¿Qué herramienta permite a los juzgados remitir telemáticamente requerimientos a los cuerpos policiales para averiguar el domicilio de una persona?",
+   o:["LexNET","GRP (Gestión de Requerimientos Policiales)","SIRAJ (Sistema de Registros Administrativos de Apoyo a la Administración de Justicia)","PNJ (Punto Neutro Judicial)"],a:1,
+   e:"El GRP (Gestión de Requerimientos Policiales) permite a los juzgados remitir telemáticamente órdenes a la Policía Nacional y Guardia Civil para averiguar domicilios y paraderos. El PNJ (Punto Neutro Judicial) permite consultar datos patrimoniales, bienes, cuentas bancarias o prestaciones en bases de datos de la Administración."},
+  {b:4,q:"¿Qué puede hacer el juez cuando debe proteger la identidad de un testigo en el proceso penal?",
+   o:["Excluirlo del proceso sin que preste declaración","Instruir pieza separada con los datos reales del testigo; en las actuaciones principales consta como Testigo 1, Testigo 2, etc.","Sustituir la declaración por un informe pericial","Celebrar el juicio a puerta cerrada sin que conste el testigo"],a:1,
+   e:"La protección de testigos se tramita en pieza separada, donde constan los datos reales. En las actuaciones principales, el testigo aparece con un código (Testigo 1, etc.). La pieza separada queda custodiada por el LAJ. El juez puede adoptar otras medidas como evitar que el testigo sea visto por el acusado."},
+  {b:4,q:"¿Cuándo puede acordarse el secreto de las actuaciones penales?",
+   o:["Nunca; las actuaciones penales son siempre públicas","Cuando el juez lo declare para evitar que la notificación de resoluciones perjudique la investigación; el secreto afecta a todas las partes salvo al Ministerio Fiscal","Solo en causas de terrorismo o crimen organizado","Cuando lo solicite el abogado defensor"],a:1,
+   e:"El juez puede declarar el secreto de las actuaciones (art. 302 LECrim) cuando lo exija la investigación, para evitar que su conocimiento comprometa su eficacia. El secreto puede afectar a todas las partes, excepto al Ministerio Fiscal, que siempre tiene acceso."},
+
+  // ── BLOQUE III — JURISDICCIÓN CONTENCIOSO-ADMINISTRATIVA (b:5, 20 preguntas) ──
+  {b:5,q:"¿Qué norma regula el procedimiento administrativo común de las Administraciones Públicas?",
+   o:["Ley 29/1998 (LRJCA)","Ley 40/2015 de Régimen Jurídico del Sector Público","Ley 39/2015 de Procedimiento Administrativo Común","Ley Orgánica 6/1985 del Poder Judicial"],a:2,
+   e:"La Ley 39/2015 regula el procedimiento administrativo común (producción de actos, tramitación de expedientes, derechos del interesado). La Ley 40/2015 regula el régimen jurídico interno del sector público. La Ley 29/1998 (LRJCA) regula el proceso judicial contencioso-administrativo."},
+  {b:5,q:"¿Cuál es la regla general del silencio administrativo en procedimientos iniciados a solicitud del interesado?",
+   o:["Silencio desestimatorio en todo caso","Silencio estimatorio, salvo que una norma con rango de ley o Derecho de la UE establezca lo contrario","Silencio estimatorio solo si la Administración lo notifica expresamente","Silencio estimatorio únicamente cuando la cuantía no supera 6.000 €"],a:1,
+   e:"Art. 24 Ley 39/2015: en procedimientos iniciados a solicitud del interesado, la regla general es el silencio estimatorio. Las excepciones (silencio desestimatorio) deben establecerse expresamente en norma con rango de ley o en Derecho de la UE/internacional aplicable."},
+  {b:5,q:"¿En cuál de estos supuestos el silencio administrativo produce efecto desestimatorio?",
+   o:["Solicitud de licencia de obra ordinaria","Impugnación de actos y disposiciones, responsabilidad patrimonial y derecho de petición del art. 29 CE","Solicitud de subvención por persona jurídica","Solicitud de certificado de empadronamiento"],a:1,
+   e:"Son supuestos tasados de silencio desestimatorio (entre otros): derecho de petición (art. 29 CE), transferencia de facultades sobre dominio público o servicio público, actividades que puedan dañar el medio ambiente, responsabilidad patrimonial e impugnación de actos y disposiciones."},
+  {b:5,q:"¿En cuánto tiempo prescriben las infracciones administrativas muy graves según la Ley 40/2015?",
+   o:["6 meses","1 año","2 años","3 años"],a:3,
+   e:"Ley 40/2015, art. 30: las infracciones muy graves prescriben a los 3 años; las graves, a los 2 años; y las leves, a los 6 meses. Las sanciones muy graves y graves prescriben también a los 3 y 2 años respectivamente; las leves, al año."},
+  {b:5,q:"¿Cuáles son las cuatro fases del procedimiento administrativo común según la Ley 39/2015?",
+   o:["Apertura, instrucción, deliberación y resolución","Iniciación, ordenación, instrucción y finalización","Solicitud, alegaciones, prueba y resolución","Incoación, instrucción, audiencia y fallo"],a:1,
+   e:"La Ley 39/2015 estructura el procedimiento en: 1) Iniciación (de oficio o a solicitud), 2) Ordenación (impulso de oficio, medios electrónicos), 3) Instrucción (alegaciones, prueba, informes, audiencia, información pública) y 4) Finalización (resolución, desistimiento, renuncia, caducidad o terminación convencional)."},
+  {b:5,q:"¿Cuándo es recurrible directamente ante la jurisdicción contencioso-administrativa un acto de trámite?",
+   o:["Nunca; los actos de trámite no son recurribles","Cuando decida el fondo, impida continuar el procedimiento, cause indefensión o produzca perjuicio irreparable","Siempre que sea desfavorable al interesado","Solo cuando lo solicite expresamente la Administración"],a:1,
+   e:"Los actos de trámite solo son impugnables en supuestos cualificados: cuando deciden directa o indirectamente el fondo del asunto, impiden continuar el procedimiento, causan indefensión o producen perjuicio irreparable para derechos o intereses legítimos (art. 25.1 LRJCA)."},
+  {b:5,q:"¿Qué órgano contencioso-administrativo conoce del recurso de casación y forma jurisprudencia?",
+   o:["Tribunales Superiores de Justicia","Audiencia Nacional, Sala de lo Contencioso-Administrativo","Sala Tercera (Contencioso) del Tribunal Supremo","Tribunal Central de Instancia"],a:2,
+   e:"La Sala de lo Contencioso-Administrativo del Tribunal Supremo (Sala Tercera) conoce del recurso de casación. Su función es la formación de jurisprudencia mediante el requisito del interés casacional objetivo, que justifica la intervención del alto tribunal."},
+  {b:5,q:"¿Cómo se tramitan las medidas cautelares en el proceso contencioso-administrativo?",
+   o:["Dentro del proceso principal, sin tramitación separada","En pieza separada, ponderando los intereses públicos y privados en conflicto","Como incidente en el expediente administrativo","Se conceden automáticamente al interponer el recurso contra un acto de gravamen"],a:1,
+   e:"Las medidas cautelares contencioso-administrativas (arts. 129 y ss. LRJCA) se tramitan en pieza separada. El juez pondera el interés público y el privado del solicitante, y puede adoptarlas si la ejecución del acto podría hacer perder al recurso su finalidad legítima."},
+  {b:5,q:"¿En qué artículo de la LRJCA se regula el procedimiento abreviado y cuál es su rasgo clave?",
+   o:["Art. 45 LRJCA; tramitación íntegramente escrita","Art. 78 LRJCA; la vista concentra contestación, prueba y conclusiones en un solo acto","Art. 51 LRJCA; solo para cuantías inferiores a 6.000 €","Art. 114 LRJCA; tutela urgente de derechos fundamentales"],a:1,
+   e:"El procedimiento abreviado del art. 78 LRJCA se caracteriza por que la demanda inicia directamente el proceso y la vista concentra la ratificación de demanda, la contestación oral, la proposición y práctica de prueba y las conclusiones en un solo acto."},
+  {b:5,q:"¿Qué justifica la admisión del recurso de casación contencioso-administrativo?",
+   o:["Que la cuantía del asunto supere 30.000 €","La existencia de interés casacional objetivo para la formación de jurisprudencia","Que la sentencia sea desfavorable a la Administración demandada","La contradicción entre sentencias de diferentes TSJ sobre el mismo asunto"],a:1,
+   e:"El modelo de casación contencioso-administrativo (reformado en 2015) exige interés casacional objetivo: que la resolución del recurso sirva para fijar, aclarar o unificar doctrina jurisprudencial de relevancia. No se basa en la cuantía ni en la mera contradicción de sentencias."},
+  {b:5,q:"¿Cuál es el plazo máximo para resolver un procedimiento administrativo cuando la norma reguladora no fija uno específico?",
+   o:["1 mes","2 meses","3 meses","6 meses"],a:2,
+   e:"Art. 21.3 Ley 39/2015: si la norma reguladora no fija plazo, el máximo es de 3 meses. En ningún caso la norma puede establecer un plazo superior a 6 meses, salvo que lo prevea una ley estatal o Derecho de la UE."},
+  {b:5,q:"¿Qué es la vía de hecho como objeto de recurso contencioso-administrativo?",
+   o:["Una actuación de la Administración basada en un acto administrativo ineficaz","Una actuación material de la Administración sin cobertura jurídica suficiente o que excede la que le ampara","Un reglamento ilegal dictado por la Administración","Una disposición general sin rango de ley que vulnera derechos"],a:1,
+   e:"La vía de hecho (art. 30 LRJCA) es la actuación material de la Administración que carece de cobertura jurídica suficiente o que, teniéndola, excede de la que le ampara. El ciudadano puede pedir al juzgado que ordene la cesación de esa actuación de forma urgente."},
+  {b:5,q:"¿Cuál es el documento clave que el órgano judicial reclama a la Administración en la fase inicial del proceso contencioso?",
+   o:["La resolución impugnada en formato notarial","El expediente administrativo que contiene toda la documentación del procedimiento previo","El presupuesto de la actuación administrativa impugnada","El libro de actas del órgano administrativo demandado"],a:1,
+   e:"Tras la interposición del recurso, el órgano judicial reclama el expediente administrativo a la Administración demandada (art. 48 LRJCA). El expediente es esencial porque contiene la actuación impugnada y permite al tribunal revisar su legalidad."},
+  {b:5,q:"¿Cuáles son los posibles fallos de una sentencia contencioso-administrativa?",
+   o:["Solo estimatoria o desestimatoria","Inadmitir el recurso, desestimarlo o estimarlo (anulando el acto/disposición o reconociendo una situación jurídica)","Confirmar o revocar el acto administrativo","Solo declarar la nulidad o anulabilidad del acto"],a:1,
+   e:"La sentencia contencioso-administrativa puede: 1) Inadmitir (obstáculo procesal), 2) Desestimar (confirmar la actuación administrativa), 3) Estimar (anular total o parcialmente el acto/disposición, reconocer una situación jurídica individualizada u ordenar a la Administración que actúe de un determinado modo)."},
+  {b:5,q:"¿Qué es la inactividad administrativa como objeto de recurso contencioso?",
+   o:["La demora en tramitar una solicitud del interesado","La falta de actuación de la Administración cuando está legalmente obligada a actuar (dictar un acto o ejecutar una prestación)","La actuación administrativa contraria al ordenamiento","El silencio negativo en un expediente sancionador"],a:1,
+   e:"La inactividad (art. 29 LRJCA) permite recurrir la falta de actuación de la Administración cuando esta está obligada legalmente a actuar (dictar un acto, ejecutar una prestación material). Es distinta del silencio: este se refiere a la falta de resolución expresa en un procedimiento ya iniciado."},
+  {b:5,q:"¿Cuál es el plazo del trámite de audiencia al interesado en el procedimiento administrativo común?",
+   o:["5 días","10 a 15 días","20 días","1 mes"],a:1,
+   e:"Art. 82 Ley 39/2015: el trámite de audiencia se concede al interesado por un plazo de 10 a 15 días para que formule alegaciones y aporte documentos antes de que se redacte la propuesta de resolución. El trámite de información pública tiene una duración mínima de 20 días."},
+  {b:5,q:"¿Qué principio prohíbe sancionar administrativamente a alguien ya condenado penalmente por los mismos hechos?",
+   o:["Principio de legalidad sancionadora","Principio non bis in idem","Principio de proporcionalidad de las sanciones","Principio de tipicidad"],a:1,
+   e:"El principio non bis in idem (art. 31 Ley 40/2015) prohíbe la doble sanción por los mismos hechos. Cuando se tramita un proceso penal sobre los mismos hechos, el procedimiento administrativo sancionador debe suspenderse. Tiene reconocimiento constitucional en el art. 25 CE."},
+  {b:5,q:"¿Qué órgano contencioso-administrativo conoce de los recursos contra actos de órganos de las Comunidades Autónomas?",
+   o:["Sección Contencioso-Administrativa del Tribunal de Instancia","Sala de lo Contencioso-Administrativo del TSJ","Audiencia Nacional, Sala de lo Contencioso","Tribunal Central de Instancia"],a:1,
+   e:"Las Salas de lo Contencioso-Administrativo de los Tribunales Superiores de Justicia conocen, entre otros asuntos, de los recursos contra actos y disposiciones de los órganos de las Comunidades Autónomas, así como de los que no correspondan a los tribunales de instancia ni a la Audiencia Nacional."},
+  {b:5,q:"¿Cómo se inicia habitualmente el proceso contencioso-administrativo ordinario?",
+   o:["Directamente por demanda, igual que el proceso civil","Mediante escrito de interposición del recurso, seguido de la reclamación del expediente y posterior demanda","Mediante solicitud previa ante la propia Administración demandada","Por denuncia del ciudadano ante el Tribunal de Instancia"],a:1,
+   e:"El proceso ordinario contencioso comienza con el escrito de interposición del recurso (art. 45 LRJCA). A continuación, el órgano judicial reclama el expediente administrativo a la Administración. Una vez recibido, se emplaza al recurrente para que formule la demanda."},
+  {b:5,q:"¿Qué procedimiento especial del Título V de la LRJCA protege con tramitación preferente los derechos fundamentales?",
+   o:["Procedimiento abreviado del art. 78 LRJCA","Procedimiento de protección de derechos fundamentales (arts. 114-122 quater LRJCA)","Cuestión de ilegalidad del art. 123 LRJCA","Garantía de unidad de mercado del art. 127 bis LRJCA"],a:1,
+   e:"El procedimiento de protección de derechos fundamentales (arts. 114-122 quater LRJCA) tiene tramitación preferente y urgente. Se aplica cuando se denuncia la vulneración de derechos fundamentales o libertades públicas con motivo de una actuación administrativa, con intervención del Ministerio Fiscal cuando proceda."},
+
+  // ── BLOQUE IV — JURISDICCIÓN SOCIAL (b:6, 20 preguntas) ──
+  {b:6,q:"¿Cuál es la norma procesal central del orden social en España?",
+   o:["Estatuto de los Trabajadores (Real Decreto Legislativo 2/2015)","Ley 36/2011, reguladora de la jurisdicción social (LJS)","Real Decreto-ley 8/2019 de medidas de protección social","Ley 29/1998 de la Jurisdicción Contencioso-Administrativa"],a:1,
+   e:"La Ley 36/2011, reguladora de la jurisdicción social (LJS), es la norma procesal central del orden social. Regula los órganos, competencias, partes, procedimientos, recursos y ejecución del proceso laboral. Sustituyó a la anterior Ley de Procedimiento Laboral."},
+  {b:6,q:"¿Qué principios son especialmente característicos del proceso laboral?",
+   o:["Principio inquisitivo y secreto de actuaciones","Oralidad, inmediación, celeridad y concentración","Principio de mediación obligatoria y escritura","Principio dispositivo en todas sus fases"],a:1,
+   e:"El proceso laboral se inspira en: oralidad (predomina la exposición oral), inmediación (contacto directo del juzgador con las pruebas), celeridad (plazos breves para respuesta rápida) y concentración (se intenta resolver en el menor número de actuaciones posible)."},
+  {b:6,q:"¿Cuál es la naturaleza jurídica de la conciliación previa en el proceso social?",
+   o:["Un trámite facultativo que puede omitirse sin consecuencias","Un requisito general de procedibilidad previo al proceso social, realizado ante el SMAC u órgano equivalente","Un procedimiento judicial obligatorio ante el Tribunal de Instancia","Una mediación ante el Ministerio de Trabajo con efecto suspensivo automático"],a:1,
+   e:"La conciliación previa es, con carácter general, un requisito de procedibilidad (no puede iniciarse el proceso sin intentarla) ante el SMAC u órgano equivalente. Se inicia mediante papeleta de conciliación y puede terminar con avenencia, sin avenencia o intentado sin efecto. La presentación de la papeleta puede suspender los plazos de caducidad."},
+  {b:6,q:"¿Cuál es la regla general de competencia territorial en el orden social?",
+   o:["El domicilio del trabajador siempre","El domicilio del empresario siempre","El lugar de prestación de servicios o el domicilio del demandado, a elección del demandante","La capital de la provincia donde se firmó el contrato de trabajo"],a:2,
+   e:"La regla general del art. 10 LJS es la elección del demandante entre el lugar de prestación de servicios y el domicilio del demandado. Hay reglas especiales para Seguridad Social (domicilio del demandante o lugar de la actuación impugnada), sindicatos, procesos electorales y otros supuestos."},
+  {b:6,q:"¿Es obligatoria la intervención de abogado en la primera instancia del proceso social?",
+   o:["Sí, siempre es obligatoria como en el proceso civil ordinario","No, la defensa técnica en instancia es facultativa; el trabajador puede actuar por sí mismo","Sí, pero puede sustituirse por un graduado social en todos los casos","Solo es obligatoria cuando la cuantía supera 6.000 €"],a:1,
+   e:"En la primera instancia del proceso social, la postulación es facultativa: el trabajador puede comparecer por sí mismo, o con abogado, graduado social colegiado o procurador. En el recurso de suplicación se exige abogado o graduado social colegiado; en casación, abogado preceptivo."},
+  {b:6,q:"¿Ante qué órgano se interpone el recurso de suplicación en el orden social?",
+   o:["Sala de lo Social del Tribunal Supremo","Sala de lo Social de la Audiencia Nacional","Sala de lo Social del Tribunal Superior de Justicia","Sección Social del Tribunal de Instancia en funciones de segunda instancia"],a:2,
+   e:"El recurso de suplicación es el recurso devolutivo característico del orden social frente a determinadas resoluciones de instancia. Lo conoce la Sala de lo Social del TSJ. Es necesaria la intervención de abogado o graduado social colegiado para interponerlo."},
+  {b:6,q:"¿Qué consecuencia tiene la calificación del despido como nulo?",
+   o:["La empresa paga solo la indemnización económica correspondiente","Readmisión obligatoria del trabajador y abono de los salarios de tramitación, sin opción empresarial a indemnización sustitutoria","La empresa puede elegir entre readmitir o abonar la indemnización","Solo procede cuando el trabajador tiene representación sindical"],a:1,
+   e:"El despido nulo (discriminatorio, lesivo de derechos fundamentales, durante maternidad/paternidad, etc.) implica readmisión inmediata obligatoria y pago de los salarios de tramitación. No hay opción empresarial a la indemnización sustitutoria, a diferencia del despido improcedente."},
+  {b:6,q:"¿Cuál es el plazo habitual de caducidad para impugnar un despido?",
+   o:["5 días hábiles desde la comunicación del despido","10 días hábiles desde la comunicación del despido","20 días hábiles desde la fecha de efectividad del despido","3 meses desde la comunicación del despido"],a:2,
+   e:"El plazo de caducidad para impugnar el despido es de 20 días hábiles desde la fecha de efectividad del despido. Es un plazo breve y estricto: su incumplimiento determina la pérdida del derecho de impugnación. La presentación de la papeleta de conciliación previa lo suspende."},
+  {b:6,q:"¿Qué órgano social conoce en primera instancia de la mayoría de los procesos laborales?",
+   o:["Sala de lo Social del TSJ","Secciones de lo Social del Tribunal de Instancia","Sala de lo Social de la Audiencia Nacional","Sala de lo Social del Tribunal Supremo"],a:1,
+   e:"Las Secciones de lo Social del Tribunal de Instancia (que sustituyen a los Juzgados de lo Social conforme al modelo de la LO 1/2025) conocen en primera o única instancia de los asuntos del orden social que no correspondan a órganos superiores. Existe al menos una sección por provincia."},
+  {b:6,q:"¿Cuándo interviene el Fondo de Garantía Salarial (FOGASA) en el proceso social?",
+   o:["Siempre que haya un conflicto laboral entre empresa y trabajador","Cuando el empresario es insolvente o está en concurso y no puede abonar los salarios o indemnizaciones debidos","Solo en conflictos colectivos que afectan a más de 10 trabajadores","Cuando el trabajador no está afiliado a la Seguridad Social"],a:1,
+   e:"El FOGASA (Fondo de Garantía Salarial) garantiza el pago de salarios e indemnizaciones cuando el empresario es insolvente o está en concurso de acreedores. Puede comparecer en el proceso cuando exista o pueda derivarse responsabilidad a su cargo, y actúa también en ejecuciones contra empresas insolventes."},
+  {b:6,q:"¿Cuándo procede el proceso de conflicto colectivo?",
+   o:["Cuando varios trabajadores presentan demandas individuales simultáneas","Cuando la controversia afecta a un grupo genérico de trabajadores sobre la interpretación o aplicación de norma, convenio, pacto o práctica empresarial","Solo cuando el sindicato convoca una huelga","Cuando hay un ERE que afecta a más de 10 trabajadores"],a:1,
+   e:"El proceso de conflicto colectivo (arts. 153 y ss. LJS) procede cuando la controversia afecta a un grupo genérico de trabajadores (no identificados individualmente) y versa sobre la interpretación o aplicación de una norma estatal, convenio colectivo, pacto de empresa o práctica empresarial."},
+  {b:6,q:"¿Qué caracteriza al procedimiento de tutela de derechos fundamentales en el orden social?",
+   o:["Es supletorio del proceso ordinario cuando no hay otra vía procesal específica","Es un procedimiento preferente y urgente, con posibilidad de obtener cese de la conducta, reposición del derecho e indemnización","Es idéntico al proceso ordinario pero con plazo reducido a la mitad","Solo puede iniciarlo el sindicato, no el trabajador individual"],a:1,
+   e:"El procedimiento de tutela de derechos fundamentales (arts. 177 y ss. LJS) tiene tramitación preferente y urgente. Puede obtener: cese inmediato de la conducta vulneradora, reposición del derecho al estado anterior, indemnización de daños, y nulidad de las actuaciones empresariales que vulneran los derechos."},
+  {b:6,q:"¿Qué recurso del Tribunal Supremo unifica la doctrina cuando existen sentencias contradictorias de distintos TSJ?",
+   o:["Recurso de suplicación unificador","Recurso de casación para unificación de doctrina","Recurso extraordinario de revisión de sentencia firme","Recurso de apelación especial en interés de ley"],a:1,
+   e:"La Sala de lo Social del Tribunal Supremo conoce del recurso de casación para unificación de doctrina (RCUD), que procede cuando existen sentencias contradictorias de diferentes TSJ o entre el TSJ y el Tribunal Supremo sobre la misma cuestión esencialmente igual. Es el mecanismo central de unificación de la jurisprudencia laboral."},
+  {b:6,q:"¿Para qué sirve el proceso monitorio laboral?",
+   o:["Para impugnar despidos de forma urgente sin conciliación previa","Para reclamar deudas dinerarias laborales en supuestos tasados cuando la deuda es vencida, exigible y documentada","Para tramitar conflictos colectivos sin necesidad de convenio","Para ejecutar laudos arbitrales laborales contra la Administración"],a:1,
+   e:"El proceso monitorio laboral (art. 101 LJS) permite reclamar deudas dinerarias laborales (salarios, liquidaciones, etc.) en supuestos tasados de forma más ágil cuando la deuda es vencida, exigible y documentada. Si el empresario no paga ni se opone en plazo, se despacha directamente la ejecución."},
+  {b:6,q:"¿Cuál de estos conflictos NO es, con carácter general, competencia del orden social?",
+   o:["Impugnación de despido por trabajador en empresa privada","Reclamación de prestación por desempleo ante el SEPE","Recurso contra sanción disciplinaria impuesta a un funcionario público de carrera","Conflicto colectivo en empresa del sector privado"],a:2,
+   e:"El orden social no conoce, como regla general, de conflictos relativos a funcionarios públicos ni personal estatutario, que se rigen por el Derecho Administrativo. Las sanciones disciplinarias a funcionarios públicos se recurren en el orden contencioso-administrativo."},
+  {b:6,q:"¿Cómo se materializa la ejecución dineraria laboral cuando el condenado no paga voluntariamente?",
+   o:["El FOGASA responde automáticamente sin necesidad de actuación judicial","Mediante requerimiento de pago, embargo de bienes, averiguación patrimonial, realización de bienes y pago al ejecutante","Mediante retención automática de la nómina sin actuación judicial previa","Por conversión automática en deuda pública a cargo del Estado"],a:1,
+   e:"La ejecución dineraria laboral sigue los pasos habituales: requerimiento de pago al ejecutado, embargo de bienes (cuentas, inmuebles, otros bienes), averiguación patrimonial si fuera necesario, realización de los bienes embargados y pago al ejecutante con el producto obtenido."},
+  {b:6,q:"¿Qué tipo de asuntos sociales conoce la Sala de lo Social de la Audiencia Nacional?",
+   o:["Las apelaciones contra sentencias de los TSJ en materia laboral","Conflictos colectivos y procesos sociales cuyo ámbito territorial excede de una sola Comunidad Autónoma","Todas las causas laborales contra el Estado como empleador","Los recursos de casación para unificación de doctrina"],a:1,
+   e:"La Sala de lo Social de la Audiencia Nacional conoce de procesos laborales (especialmente conflictos colectivos, impugnación de convenios y materias sindicales o empresariales) cuyo ámbito territorial excede del de una sola Comunidad Autónoma. No conoce de apelaciones ni de casación (estas corresponden al TS)."},
+  {b:6,q:"¿Qué significa el principio in dubio pro operario en el Derecho laboral?",
+   o:["Que el trabajador siempre gana el proceso laboral por ser la parte más débil","Que en caso de duda en la interpretación de normas laborales se opta por la interpretación más favorable al trabajador","Que el empresario debe probar siempre su inocencia en los procesos laborales","Que las horas extras se presumen siempre como jornada ordinaria retribuida"],a:1,
+   e:"El principio in dubio pro operario es un criterio de interpretación: cuando existan dudas razonables sobre el alcance de una norma, convenio o cláusula contractual laboral, se opta por la interpretación más favorable al trabajador, compensando la desigualdad material de las partes en la relación de trabajo."},
+  {b:6,q:"¿Cuándo procede la ejecución provisional en el orden social?",
+   o:["Nunca; en el orden social solo se ejecutan resoluciones firmes","Cuando la norma lo permite, ejecutando resoluciones no firmes (pendientes de recurso) en las condiciones legalmente establecidas","Solo en casos de despido improcedente con condena al pago de salarios de tramitación","Solo cuando lo solicita el FOGASA para cobrar deudas salariales"],a:1,
+   e:"La ejecución provisional en el orden social permite ejecutar determinadas resoluciones aunque no sean firmes (estén pendientes de recurso), en los términos y con los límites que establece la LJS. Es especialmente relevante en condenas de cantidad y en ejecuciones de sentencias de despido."},
+  {b:6,q:"¿Cuándo pueden las Secciones de lo Social del Tribunal de Instancia extender su jurisdicción más allá de una sola provincia?",
+   o:["Nunca; cada sección tiene jurisdicción exclusivamente provincial","Excepcionalmente, cuando así lo determine la ley, pueden extender su jurisdicción a dos o más provincias de una misma Comunidad Autónoma","Siempre que la cuantía del proceso supere 30.000 €","Cuando el Consejo General del Poder Judicial lo autorice caso por caso"],a:1,
+   e:"Las Secciones de lo Social del Tribunal de Instancia tienen como regla sede en la capital provincial y jurisdicción provincial. Sin embargo, excepcionalmente pueden existir secciones cuya jurisdicción se extienda a dos o más provincias de la misma Comunidad Autónoma cuando las circunstancias organizativas así lo aconsejen."},
 ];
 
 // ===== ESTADO =====
-const BLOCK_NAMES = ['Bloque 1','Bloque 2','Bloque 3','Bloque 4','General'];
+const BLOCK_NAMES = ['Civil 1','Civil 2','Civil 3','Civil 4','Bloque II Penal','Bloque III Contencioso','Bloque IV Social','General'];
 let selectedBlock = null;
 let selectedNum = 10;
 let currentQuestions = [];
