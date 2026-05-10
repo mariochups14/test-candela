@@ -16,6 +16,7 @@
     --bg:#0f172a;--surface:#1e293b;--surface2:#273449;
     --primary:#3b82f6;--primary-dark:#2563eb;
     --green:#22c55e;--red:#ef4444;--yellow:#f59e0b;
+    --purple:#8b5cf6;
     --text:#f1f5f9;--muted:#94a3b8;--border:#334155;
     --radius:14px;--safe-bottom:env(safe-area-inset-bottom,0px);
   }
@@ -141,7 +142,7 @@
     <div class="logo">
       <div class="logo-icon">⚖️</div>
       <h1>Test Candela</h1>
-      <p>Civil · Penal · Contencioso · Social</p>
+      <p>Civil · Penal · Contencioso · Social · Auxilio Judicial</p>
     </div>
 
     <p class="section-title">Bloque I — Jurisdicción Civil</p>
@@ -184,6 +185,25 @@
         <span class="badge">Bloque IV</span>
         <h3>Jurisdicción Social</h3>
         <p>LJS, conciliación, despido, suplicación</p>
+      </div>
+    </div>
+
+    <p class="section-title">Bloque V — Auxilio Judicial</p>
+    <div class="block-grid">
+      <div class="block-card" id="bc7" onclick="selectBlock(7)">
+        <span class="badge" style="background:#8b5cf6">AJ — 1</span>
+        <h3>Organización Judicial</h3>
+        <p>Constitución, CGPJ, planta judicial, MF</p>
+      </div>
+      <div class="block-card" id="bc8" onclick="selectBlock(8)">
+        <span class="badge" style="background:#8b5cf6">AJ — 2</span>
+        <h3>Funciones y Actos</h3>
+        <p>Cuerpo AJ, comunicaciones, ejecución</p>
+      </div>
+      <div class="block-card" id="bc9" onclick="selectBlock(9)" style="grid-column:1/-1">
+        <span class="badge" style="background:#8b5cf6">AJ — 3</span>
+        <h3>Igualdad, Datos y Ofimática</h3>
+        <p>LO 3/2007, LO 1/2004, RGPD, Carta de Derechos</p>
       </div>
     </div>
 
@@ -724,10 +744,190 @@ const QUESTIONS = [
   {b:6,q:"¿Cuándo pueden las Secciones de lo Social del Tribunal de Instancia extender su jurisdicción más allá de una sola provincia?",
    o:["Nunca; cada sección tiene jurisdicción exclusivamente provincial","Excepcionalmente, cuando así lo determine la ley, pueden extender su jurisdicción a dos o más provincias de una misma Comunidad Autónoma","Siempre que la cuantía del proceso supere 30.000 €","Cuando el Consejo General del Poder Judicial lo autorice caso por caso"],a:1,
    e:"Las Secciones de lo Social del Tribunal de Instancia tienen como regla sede en la capital provincial y jurisdicción provincial. Sin embargo, excepcionalmente pueden existir secciones cuya jurisdicción se extienda a dos o más provincias de la misma Comunidad Autónoma cuando las circunstancias organizativas así lo aconsejen."},
+
+  // ── BLOQUE AJ-1: ORGANIZACIÓN JUDICIAL (b:7) ──
+  {b:7,q:"¿En qué fecha fue aprobada la Constitución Española en referéndum popular?",
+   o:["6 de diciembre de 1977","6 de diciembre de 1978","29 de diciembre de 1978","27 de diciembre de 1978"],a:1,
+   e:"La Constitución Española fue aprobada en referéndum el 6 de diciembre de 1978, sancionada por el Rey el 27 de diciembre de 1978 y publicada en el BOE el 29 de diciembre de 1978."},
+  {b:7,q:"¿Cuántos artículos tiene la Constitución Española de 1978?",
+   o:["156 artículos","169 artículos","178 artículos","200 artículos"],a:1,
+   e:"La CE consta de 169 artículos distribuidos en un Preámbulo y 10 Títulos (Título Preliminar y Títulos I al IX), junto con disposiciones adicionales, transitorias, derogatoria y final."},
+  {b:7,q:"¿Qué artículo de la Constitución Española reconoce el derecho a la tutela judicial efectiva?",
+   o:["Art. 14","Art. 17","Art. 24","Art. 25"],a:2,
+   e:"El art. 24 CE establece que todas las personas tienen derecho a obtener la tutela efectiva de los jueces y tribunales en el ejercicio de sus derechos e intereses legítimos, sin que en ningún caso pueda producirse indefensión."},
+  {b:7,q:"¿Qué artículo de la Constitución consagra el principio de exclusividad jurisdiccional?",
+   o:["Art. 106","Art. 117","Art. 122","Art. 124"],a:1,
+   e:"El art. 117.3 CE atribuye exclusivamente a los Juzgados y Tribunales el ejercicio de la potestad jurisdiccional: juzgar y hacer ejecutar lo juzgado."},
+  {b:7,q:"¿Cuántos miembros compone el Consejo General del Poder Judicial (CGPJ)?",
+   o:["17 miembros","20 miembros","21 miembros","25 miembros"],a:2,
+   e:"El CGPJ está integrado por el Presidente del Tribunal Supremo (que lo preside) y 20 vocales: 12 jueces o magistrados y 8 juristas de reconocida competencia, propuestos 4 por el Congreso y 4 por el Senado (art. 122 CE)."},
+  {b:7,q:"¿Cuál es la duración del mandato de los vocales del CGPJ?",
+   o:["4 años","5 años","6 años","8 años"],a:1,
+   e:"Los vocales del CGPJ son designados por un período de cinco años, conforme al art. 122.3 CE y la LOPJ."},
+  {b:7,q:"¿Quién nombra al Presidente del Tribunal Supremo y del CGPJ?",
+   o:["El Congreso de los Diputados","El Gobierno","El Rey, a propuesta del CGPJ","El Tribunal Constitucional"],a:2,
+   e:"Conforme al art. 123.2 CE, el Presidente del Tribunal Supremo es nombrado por el Rey a propuesta del CGPJ. El Presidente del TS preside también el CGPJ."},
+  {b:7,q:"¿Cuál es la función principal del CGPJ?",
+   o:["Dictar sentencias en asuntos constitucionales","Gobernar el Poder Judicial","Ejercer la potestad jurisdiccional","Dirigir el Ministerio Fiscal"],a:1,
+   e:"El CGPJ es el órgano de gobierno del Poder Judicial, con atribuciones en materia de nombramientos, ascensos, inspección y régimen disciplinario de jueces y magistrados (art. 122.2 CE)."},
+  {b:7,q:"¿Cuántas Salas tiene el Tribunal Supremo?",
+   o:["3 Salas","4 Salas","5 Salas","6 Salas"],a:2,
+   e:"El Tribunal Supremo tiene 5 Salas: 1ª Civil, 2ª Penal, 3ª Contencioso-Administrativo, 4ª Social y 5ª Militar."},
+  {b:7,q:"¿Qué Sala del Tribunal Supremo conoce del recurso de casación penal?",
+   o:["Sala Primera (Civil)","Sala Segunda (Penal)","Sala Tercera (Contencioso-Administrativo)","Sala Cuarta (Social)"],a:1,
+   e:"La Sala Segunda del Tribunal Supremo es la competente para el recurso de casación penal y para el enjuiciamiento de aforados (ministros, diputados, senadores, etc.)."},
+  {b:7,q:"¿Qué órgano jurisdiccional conoce de los delitos de terrorismo en España?",
+   o:["Tribunal Supremo","Audiencia Nacional","Audiencia Provincial de Madrid","Tribunal Superior de Justicia de Madrid"],a:1,
+   e:"La Audiencia Nacional tiene competencia para los delitos de terrorismo, tráfico de drogas a gran escala, falsificación de moneda y otros que afecten a múltiples provincias o tengan trascendencia nacional."},
+  {b:7,q:"¿Cuántas Salas tiene la Audiencia Nacional?",
+   o:["2 Salas","3 Salas","4 Salas","5 Salas"],a:1,
+   e:"La Audiencia Nacional tiene tres Salas: Sala de lo Penal, Sala de lo Contencioso-Administrativo y Sala de lo Social."},
+  {b:7,q:"¿Cuál es el órgano jurisdiccional de apelación civil de las resoluciones del Tribunal de Instancia?",
+   o:["Tribunal Supremo","Tribunal Superior de Justicia","Audiencia Provincial","El propio Tribunal de Instancia en Sala de apelación"],a:2,
+   e:"La Audiencia Provincial es el órgano de segunda instancia para las apelaciones civiles dictadas por los Tribunales de Instancia dentro de su demarcación (art. 82 LOPJ)."},
+  {b:7,q:"¿Qué juzgado instruye las causas penales por delitos de violencia de género?",
+   o:["Juzgado de lo Penal","Juzgado de Instrucción","Juzgado de Vigilancia Penitenciaria","Juzgado de Violencia sobre la Mujer"],a:3,
+   e:"Los Juzgados de Violencia sobre la Mujer (JVM) instruyen las causas penales por actos de violencia de género en el ámbito de la pareja, y conocen también de las cuestiones civiles conexas (guarda, alimentos, etc.)."},
+  {b:7,q:"¿Cuál es el jefe máximo del Ministerio Fiscal?",
+   o:["Fiscal Jefe Nacional","Fiscal General del Estado","Fiscal Supremo","Procurador General del Estado"],a:1,
+   e:"El Fiscal General del Estado es el jefe máximo del Ministerio Fiscal. Es nombrado por el Rey a propuesta del Gobierno, oído el CGPJ, entre juristas de reconocido prestigio con más de 15 años de ejercicio profesional."},
+  {b:7,q:"¿Cuál es el principio que obliga al Ministerio Fiscal a actuar conforme a las instrucciones de sus superiores?",
+   o:["Principio de imparcialidad","Principio de jerarquía","Principio de legalidad","Principio de independencia"],a:1,
+   e:"El Ministerio Fiscal actúa bajo los principios de unidad de actuación y dependencia jerárquica, legalidad e imparcialidad. La jerarquía implica sujeción a las instrucciones de los superiores, con el Fiscal General del Estado a la cabeza."},
+  {b:7,q:"¿Cuántos cuerpos generales al servicio de la Administración de Justicia existen?",
+   o:["2 cuerpos","3 cuerpos","4 cuerpos","5 cuerpos"],a:1,
+   e:"Son tres: Cuerpo de Gestión Procesal y Administrativa (Grupo A2), Cuerpo de Tramitación Procesal y Administrativa (Grupo C1) y Cuerpo de Auxilio Judicial (Grupo C2)."},
+  {b:7,q:"¿Qué titulación mínima se exige para acceder al Cuerpo de Auxilio Judicial?",
+   o:["Grado universitario","Diplomatura universitaria","Graduado en Educación Secundaria Obligatoria (ESO) o equivalente","Título de Bachiller"],a:2,
+   e:"El Cuerpo de Auxilio Judicial requiere el Graduado en Educación Secundaria Obligatoria (ESO) o equivalente. Es el cuerpo de menor titulación requerida dentro de los cuerpos generales al servicio de la Administración de Justicia."},
+  {b:7,q:"¿A qué grupo de clasificación profesional pertenece el Cuerpo de Auxilio Judicial?",
+   o:["Grupo A1","Grupo A2","Grupo C1","Grupo C2"],a:3,
+   e:"El Cuerpo de Auxilio Judicial pertenece al Subgrupo C2, el de menor nivel dentro de los cuerpos generales al servicio de la Administración de Justicia."},
+  {b:7,q:"¿Qué potestad NO tiene el Letrado de la Administración de Justicia (LAJ)?",
+   o:["Dictar decretos","Dictar diligencias de ordenación","Dictar sentencias","Certificar actos del tribunal"],a:2,
+   e:"El LAJ carece de potestad jurisdiccional. Dicta diligencias de ordenación, decretos y diligencias de constancia, pero nunca sentencias, que son resoluciones exclusivamente jurisdiccionales."},
+  {b:7,q:"¿Cuál de estas es la ley que regula la organización judicial en España?",
+   o:["Ley 1/2000, de Enjuiciamiento Civil","Ley Orgánica 6/1985, del Poder Judicial (LOPJ)","Ley 39/2015, del Procedimiento Administrativo Común","Real Decreto Legislativo 5/2015, TREBEP"],a:1,
+   e:"La Ley Orgánica 6/1985, de 1 de julio, del Poder Judicial (LOPJ) es la norma reguladora de la organización y funcionamiento de los órganos jurisdiccionales, el estatuto de jueces y magistrados y los cuerpos al servicio de la Administración de Justicia."},
+
+  // ── BLOQUE AJ-2: FUNCIONES Y ACTOS (b:8) ──
+  {b:8,q:"¿Cuál es la función principal del Cuerpo de Auxilio Judicial?",
+   o:["Tramitar los procedimientos judiciales","Practicar notificaciones, embargos, lanzamientos y actos de colaboración bajo la dirección del LAJ","Dictar decretos y diligencias procesales","Gestionar los archivos y registros judiciales"],a:1,
+   e:"El Cuerpo de Auxilio Judicial ejecuta materialmente los actos de comunicación (notificaciones, citaciones) y las diligencias de ejecución (embargos, lanzamientos), mantiene el orden en vistas, y colabora con otros órganos, todo bajo la dirección del LAJ."},
+  {b:8,q:"¿Qué acto de comunicación procesal fija un plazo al destinatario para comparecer o contestar?",
+   o:["Notificación","Emplazamiento","Citación","Requerimiento"],a:1,
+   e:"El emplazamiento es el acto de comunicación por el que se pone en conocimiento una resolución y se otorga un plazo para comparecer, contestar la demanda o realizar alguna actuación procesal."},
+  {b:8,q:"¿Qué acto de comunicación convoca a una persona a un lugar en día y hora concretos?",
+   o:["Notificación","Emplazamiento","Citación","Requerimiento"],a:2,
+   e:"La citación es el acto mediante el cual se convoca a una persona para que comparezca ante el tribunal en un lugar, día y hora determinados."},
+  {b:8,q:"¿Qué acto de comunicación insta a una persona a realizar u omitir un comportamiento concreto?",
+   o:["Notificación","Emplazamiento","Citación","Requerimiento"],a:3,
+   e:"El requerimiento es el acto de comunicación por el que se ordena o intima a una persona para que haga o deje de hacer algo, con los efectos que la ley establezca para el incumplimiento."},
+  {b:8,q:"¿Cuándo procede la notificación edictal (tablón/BOE)?",
+   o:["Siempre que el actor lo solicite","Cuando no se ha podido localizar al destinatario por medios ordinarios tras los intentos necesarios","Cuando la cuantía del proceso supera 6.000 €","Cuando el destinatario tiene abogado designado de oficio"],a:1,
+   e:"La notificación edictal es subsidiaria y de última instancia: solo procede cuando resulta imposible practicar la comunicación por medios ordinarios (domicilio, registros, bases de datos) tras haber agotado todos los mecanismos disponibles."},
+  {b:8,q:"¿Qué es un exhorto?",
+   o:["Un escrito de recurso entre abogados","La comunicación oficial entre tribunales españoles para solicitar la práctica de diligencias fuera de su circunscripción","Un mandamiento dirigido al Registro de la Propiedad","Un auto de admisión de demanda"],a:1,
+   e:"El exhorto es el acto de comunicación que dirige un órgano jurisdiccional a otro del mismo Estado para solicitar actuaciones dentro de la circunscripción del tribunal requerido."},
+  {b:8,q:"¿Cuántos días naturales tiene el profesional para acceder a la notificación en LexNET antes de que se entienda practicada?",
+   o:["3 días naturales","5 días hábiles","10 días naturales","3 días hábiles"],a:0,
+   e:"Conforme a la normativa LexNET, el profesional dispone de 3 días naturales desde el envío para acceder al acto de comunicación; si no accede, la notificación se entiende practicada."},
+  {b:8,q:"¿Qué bienes son absolutamente inembargables según la LEC?",
+   o:["El salario mínimo interprofesional íntegro","Los bienes inalienables, los derechos no patrimoniales y los expresamente declarados inembargables por ley","Los bienes del deudor inscritos en el Registro de la Propiedad","Las cuentas bancarias con saldo inferior a 1.000 €"],a:1,
+   e:"Son absolutamente inembargables los bienes inalienables, los derechos accesorios no transmisibles independientemente, los bienes sin contenido patrimonial y los expresamente declarados inembargables por ley (art. 605 LEC), así como los bienes del art. 606 LEC (ajuar doméstico básico, libros y herramientas profesionales hasta cierta cuantía, etc.)."},
+  {b:8,q:"¿En qué orden se embarga preferentemente según el art. 592 LEC?",
+   o:["Primero inmuebles, luego dinero en efectivo","Primero dinero en efectivo o en cuentas; luego créditos, joyas, rentas y muebles; finalmente inmuebles","El ejecutante elige libremente el orden","Primero bienes muebles, luego inmuebles, nunca dinero"],a:1,
+   e:"El art. 592 LEC fija un orden preferente: 1.º dinero/cuentas; 2.º créditos a corto plazo; 3.º joyas y obras de arte; 4.º rentas; 5.º intereses y frutos; 6.º bienes muebles; 7.º inmuebles; 8.º salarios superiores al SMI; 9.º créditos a largo plazo."},
+  {b:8,q:"¿Qué diligencia realiza el funcionario de Auxilio Judicial cuando el ocupante debe abandonar un inmueble?",
+   o:["Embargo de bienes","Notificación edictal","Diligencia de lanzamiento","Depósito de bienes embargados"],a:2,
+   e:"La diligencia de lanzamiento es la ejecución material del desalojo del inmueble. El funcionario de Auxilio Judicial, bajo la dirección del LAJ, practica el lanzamiento y pone al ejecutante en posesión del bien."},
+  {b:8,q:"¿Cuántos días tiene el deudor para pagar u oponerse en el proceso monitorio desde el requerimiento?",
+   o:["5 días","10 días","20 días","30 días"],a:2,
+   e:"Art. 815 LEC: el deudor dispone de 20 días para pagar o comparecer y oponerse. Si no hace ninguna de las dos cosas, el LAJ dicta decreto habilitando al acreedor para instar la ejecución."},
+  {b:8,q:"¿Qué ocurre si el deudor no paga ni se opone en el proceso monitorio?",
+   o:["Se dicta sentencia en rebeldía","El LAJ dicta decreto dando por terminado el monitorio y habilitando al acreedor para instar la ejecución","Se archiva el expediente","El juez dicta auto de condena en rebeldía"],a:1,
+   e:"Art. 816 LEC: si el deudor no paga ni se opone en el plazo de 20 días, el LAJ dictará decreto dando por terminado el proceso monitorio, habilitando al acreedor para instar directamente la ejecución."},
+  {b:8,q:"¿Cuál es el límite de pena que atribuye competencia a un Juzgado de lo Penal para el enjuiciamiento?",
+   o:["Hasta 3 años de privación de libertad","Hasta 5 años de privación de libertad","Hasta 9 años de privación de libertad","Hasta 15 años de privación de libertad"],a:1,
+   e:"Los Juzgados de lo Penal conocen del enjuiciamiento de los delitos cuya pena privativa de libertad no exceda de cinco años (salvo los del Tribunal del Jurado). Los delitos con pena superior los conocen las Audiencias Provinciales."},
+  {b:8,q:"¿Qué es el habeas corpus?",
+   o:["Un recurso de apelación ante la Audiencia Provincial","Un procedimiento urgente para controlar la legalidad de la detención de una persona","Una medida cautelar para víctimas de violencia de género","Un procedimiento especial para la extradición de acusados"],a:1,
+   e:"El habeas corpus (LO 6/1984) es un procedimiento urgente que permite a cualquier persona ilegalmente privada de libertad acudir al juez para que controle la legalidad de la detención y, si procede, decrete su puesta en libertad inmediata."},
+  {b:8,q:"¿Cuántos miembros tiene el Tribunal del Jurado?",
+   o:["7 jurados y 2 suplentes","9 jurados y 2 suplentes","12 jurados y 4 suplentes","6 jurados y 1 suplente"],a:1,
+   e:"Conforme a la LO 5/1995 del Tribunal del Jurado, el Jurado está compuesto por 9 ciudadanos (jurados titulares) y 2 suplentes, que emiten su veredicto con arreglo a conciencia."},
+  {b:8,q:"¿Qué ley regula la jurisdicción voluntaria en España?",
+   o:["Ley 1/2000, LEC","Ley de Enjuiciamiento Criminal","Ley 15/2015, de la Jurisdicción Voluntaria","Ley Orgánica 1/2025"],a:2,
+   e:"La Ley 15/2015, de 2 de julio, de la Jurisdicción Voluntaria regula los expedientes de jurisdicción voluntaria atribuidos a jueces, LAJs, notarios y registradores."},
+  {b:8,q:"¿Cuál es la característica principal de los expedientes de jurisdicción voluntaria?",
+   o:["Son más rápidos pero con menos garantías","No existe contienda entre partes con intereses opuestos","Siempre los resuelve el LAJ, nunca el juez","Pueden iniciarse de oficio por cualquier funcionario judicial"],a:1,
+   e:"La jurisdicción voluntaria se caracteriza por la ausencia de contienda entre partes contrapuestas. Se pide la intervención de la autoridad para dar certeza o eficacia a determinadas situaciones jurídicas, sin conflicto inter partes."},
+  {b:8,q:"¿Cuál es el límite de pena para el procedimiento abreviado en el proceso penal?",
+   o:["Delitos con pena hasta 3 años de prisión","Delitos con pena hasta 5 años de prisión","Delitos con pena hasta 9 años de prisión","Delitos con pena hasta 15 años de prisión"],a:2,
+   e:"El procedimiento abreviado (arts. 757 y ss. LECrim) se aplica al enjuiciamiento de delitos castigados con pena privativa de libertad que no exceda de nueve años."},
+  {b:8,q:"¿Qué cuerpo especial presta sus servicios en los Institutos de Medicina Legal?",
+   o:["Cuerpo de Gestión Procesal","Cuerpo de Tramitación Procesal","Cuerpo de Auxilio Judicial","Cuerpo Nacional de Médicos Forenses"],a:3,
+   e:"Los Médicos Forenses pertenecen al Cuerpo Nacional de Médicos Forenses, cuerpo especial al servicio de la Administración de Justicia. Prestan sus servicios en los Institutos de Medicina Legal y de Ciencias Forenses."},
+  {b:8,q:"¿Quién es el titular de la potestad jurisdiccional exclusiva en España?",
+   o:["El Tribunal Constitucional","Los Juzgados y Tribunales integrantes del Poder Judicial","El Consejo General del Poder Judicial","El Ministerio de Justicia"],a:1,
+   e:"El art. 117.3 CE establece que el ejercicio de la potestad jurisdiccional en todo tipo de procesos (juzgar y hacer ejecutar lo juzgado) corresponde exclusivamente a los Juzgados y Tribunales determinados por las leyes."},
+  {b:8,q:"¿Qué diferencia al principio de unidad del principio de exclusividad jurisdiccional?",
+   o:["Son el mismo principio expresado de dos formas distintas","Unidad: todos los órganos forman un único cuerpo; exclusividad: solo ellos pueden juzgar y hacer ejecutar lo juzgado","Unidad afecta al territorio; exclusividad, a la competencia material","Unidad afecta al Ministerio Fiscal; exclusividad, a los jueces"],a:1,
+   e:"El principio de unidad (art. 117.5 CE) implica que la jurisdicción es única. El de exclusividad (art. 117.3 CE) implica que la potestad jurisdiccional corresponde exclusivamente a los órganos del Poder Judicial."},
+
+  // ── BLOQUE AJ-3: IGUALDAD, DATOS Y CARTA (b:9) ──
+  {b:9,q:"¿Qué ley establece medidas para la igualdad efectiva entre hombres y mujeres en España?",
+   o:["LO 3/2007, de 22 de marzo, para la igualdad efectiva de mujeres y hombres","LO 1/2004, de 28 de diciembre, de Violencia de Género","Ley 39/2006, de Dependencia","Real Decreto 902/2020, de igualdad retributiva"],a:0,
+   e:"La Ley Orgánica 3/2007, de 22 de marzo (LOIEMH), es la norma marco de igualdad de género en España. Desarrolla el mandato del art. 14 CE estableciendo principios de actuación en todos los ámbitos públicos y privados."},
+  {b:9,q:"¿Qué se entiende por violencia de género a efectos de la LO 1/2004?",
+   o:["Cualquier violencia ejercida por un hombre contra una mujer","La violencia que, como manifestación de la discriminación y la desigualdad, ejerce sobre la mujer quien sea o haya sido su cónyuge o pareja","La violencia en el ámbito doméstico entre cualquier miembro del hogar","La violencia sexual en el ámbito laboral"],a:1,
+   e:"La LO 1/2004 define la violencia de género como la que, manifestando la discriminación y la situación de desigualdad, ejerce sobre la mujer quien sea o haya sido su cónyuge o quien esté o haya estado ligado a ella por relaciones de afectividad similares, aun sin convivencia."},
+  {b:9,q:"¿Cuál es la competencia penal específica de los Juzgados de Violencia sobre la Mujer?",
+   o:["Dictar sentencias de divorcio","Instruir causas por delitos de violencia de género y conocer de los delitos leves conexos","Conocer de todas las causas penales en que sea víctima una mujer","Tramitar los recursos contra resoluciones del Ministerio Fiscal"],a:1,
+   e:"Los JVM tienen competencia penal para la instrucción de causas por delitos de violencia de género (art. 87 ter LOPJ) y competencia civil para cuestiones conexas como guarda de menores, alimentos y uso del domicilio familiar."},
+  {b:9,q:"¿Qué norma europea regula con carácter general el tratamiento de datos de carácter personal?",
+   o:["Directiva 95/46/CE","Reglamento (UE) 2016/679 (RGPD)","Ley Orgánica 15/1999 de Protección de Datos","Carta de Derechos Fundamentales de la UE"],a:1,
+   e:"El Reglamento General de Protección de Datos (RGPD), Reglamento (UE) 2016/679, de 27 de abril de 2016, es la norma marco de la UE en materia de protección de datos. En España se complementa con la LO 3/2018 (LOPDGDD)."},
+  {b:9,q:"¿Cuáles son los derechos del interesado reconocidos en el RGPD?",
+   o:["Acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad","Derecho a la indemnización automática por cualquier tratamiento de datos","Solo el derecho de acceso y de supresión","Derechos que solo pueden ejercerse previo pago de una tasa"],a:0,
+   e:"El RGPD reconoce los derechos de acceso (art. 15), rectificación (art. 16), supresión —derecho al olvido— (art. 17), limitación del tratamiento (art. 18), portabilidad (art. 20), oposición (art. 21) y a no ser objeto de decisiones automatizadas."},
+  {b:9,q:"¿Cómo se aprobó la Carta de Derechos de los Ciudadanos ante la Justicia?",
+   o:["Mediante Ley Orgánica","Mediante Acuerdo del Pleno del Congreso en forma de Proposición no de Ley","Mediante Real Decreto del Gobierno","Mediante Acuerdo del CGPJ"],a:1,
+   e:"La Carta de Derechos de los Ciudadanos ante la Justicia fue aprobada por el Pleno del Congreso de los Diputados el 16 de abril de 2002 mediante Proposición no de Ley, por unanimidad. No tiene rango de ley pero contiene compromisos del Ministerio de Justicia y de los operadores judiciales."},
+  {b:9,q:"¿Qué derecho reconoce la Carta de Derechos a los ciudadanos en relación con la comprensión del proceso?",
+   o:["Derecho a recibir asesoramiento jurídico gratuito en todo caso","Derecho a ser informados de forma comprensible sobre la causa, el desarrollo del proceso, sus derechos y obligaciones","Derecho a ver el expediente completo en cualquier momento","Derecho a elegir el juez que conoce de su causa"],a:1,
+   e:"La Carta reconoce el derecho a recibir información general sobre el funcionamiento de los juzgados, el estado de tramitación de los asuntos y a que las actuaciones se desarrollen de forma comprensible para personas no versadas en Derecho."},
+  {b:9,q:"¿Qué ley regula la asistencia jurídica gratuita en España?",
+   o:["Ley Orgánica 6/1985, LOPJ","Ley 1/1996, de 10 de enero, de Asistencia Jurídica Gratuita","Real Decreto 455/2021, de ayudas al justiciable","Ley 39/2015 del Procedimiento Administrativo Común"],a:1,
+   e:"La Ley 1/1996, de 10 de enero, de Asistencia Jurídica Gratuita garantiza que las personas sin recursos económicos suficientes puedan acceder a la justicia con abogado y procurador designados de oficio."},
+  {b:9,q:"¿Qué ley regula el procedimiento administrativo común en España?",
+   o:["Ley 40/2015, de Régimen Jurídico del Sector Público","Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común","Real Decreto Legislativo 5/2015, TREBEP","Ley Orgánica 1/2025 de eficiencia del Servicio Público de Justicia"],a:1,
+   e:"La Ley 39/2015, de 1 de octubre, del Procedimiento Administrativo Común de las Administraciones Públicas (LPAC) regula el procedimiento que deben seguir las administraciones para relacionarse entre sí y con los ciudadanos."},
+  {b:9,q:"¿Cuál es el plazo para interponer un recurso de alzada en vía administrativa?",
+   o:["10 días hábiles","15 días hábiles","1 mes","3 meses"],a:2,
+   e:"Conforme al art. 121 Ley 39/2015, el recurso de alzada podrá interponerse en el plazo de un mes si el acto fuese expreso. Transcurrido ese plazo sin interponerse, la resolución es firme a todos los efectos."},
+  {b:9,q:"¿Qué principio de la LO 3/2007 exige adoptar medidas de conciliación de la vida personal, familiar y laboral?",
+   o:["Principio de igualdad retributiva","Principio de corresponsabilidad","Principio de presencia equilibrada","Principio de transversalidad"],a:1,
+   e:"El principio de corresponsabilidad implica que hombres y mujeres deben asumir de forma equilibrada las responsabilidades familiares y domésticas. La LO 3/2007 promueve medidas de conciliación para facilitar el ejercicio coresponsable de dichas tareas."},
+  {b:9,q:"¿A quién corresponde la instrucción de las causas por violencia de género cuando hay hijos menores afectados?",
+   o:["Al Juzgado de Instrucción ordinario","Al Juzgado de Violencia sobre la Mujer, que asume también las medidas civiles conexas","Al Juzgado de Menores","Al Juzgado de lo Penal"],a:1,
+   e:"Cuando un JVM instrúye una causa por violencia de género, le corresponde también conocer de las medidas civiles conexas (guarda y custodia, régimen de visitas, alimentos) de los hijos menores, evitando así la dispersión jurisdiccional."},
+  {b:9,q:"¿Qué derecho digital reconoce la LO 3/2018 (LOPDGDD) a los trabajadores respecto al uso de dispositivos digitales?",
+   o:["Derecho a recibir un dispositivo propio de la empresa sin coste","Derecho a la desconexión digital fuera del horario laboral","Derecho a teletrabajar siempre que lo soliciten","Derecho a no ser monitorizado en ningún caso por el empresario"],a:1,
+   e:"La LO 3/2018 reconoce el derecho a la desconexión digital (art. 88), que garantiza que los trabajadores puedan respetar su tiempo de descanso sin atender comunicaciones laborales fuera del horario de trabajo."},
+  {b:9,q:"¿Qué es el 'derecho al olvido' en materia de protección de datos?",
+   o:["El derecho a que los datos se conserven de forma encriptada indefinidamente","El derecho del interesado a solicitar la supresión de sus datos personales cuando ya no sean necesarios para la finalidad con que fueron recogidos","El derecho a eliminar el historial de búsqueda de internet de cualquier usuario","El derecho de la Administración a destruir expedientes administrativos a los 10 años"],a:1,
+   e:"El 'derecho al olvido' (art. 17 RGPD) permite al interesado solicitar la supresión de sus datos personales cuando ya no sean necesarios para los fines recogidos, cuando retire su consentimiento, cuando se hayan tratado ilícitamente o en otros supuestos previstos en el Reglamento."},
+  {b:9,q:"¿Qué organismos son competentes para ejercer el control de la protección de datos en España?",
+   o:["El Ministerio de Justicia y el Tribunal Constitucional","La Agencia Española de Protección de Datos (AEPD) y las autoridades autonómicas competentes","Solo los tribunales civiles","El CGPJ y el Defensor del Pueblo"],a:1,
+   e:"En España, la Agencia Española de Protección de Datos (AEPD) es la autoridad de control independiente en materia de protección de datos. Además existen autoridades autonómicas de control en algunas Comunidades Autónomas (Cataluña, País Vasco, etc.)."},
+  {b:9,q:"¿Qué concepto define la LO 3/2007 como 'situación en que se encuentra una persona que, por razón de sexo, recibe un trato menos favorable que otra en situación comparable'?",
+   o:["Discriminación indirecta","Discriminación directa","Acoso sexual","Brecha de género"],a:1,
+   e:"La LO 3/2007 define la discriminación directa por razón de sexo como la situación en que una persona es, ha sido o podría ser tratada de manera menos favorable que otra en situación comparable por razón de sexo."},
 ];
 
 // ===== ESTADO =====
-const BLOCK_NAMES = ['Civil 1','Civil 2','Civil 3','Civil 4','Bloque II Penal','Bloque III Contencioso','Bloque IV Social','General'];
+const BLOCK_NAMES = ['Civil 1','Civil 2','Civil 3','Civil 4','Bloque II Penal','Bloque III Contencioso','Bloque IV Social','AJ — Organización Judicial','AJ — Funciones y Actos','AJ — Igualdad y Datos'];
 let selectedBlock = null;
 let selectedNum = 10;
 let currentQuestions = [];

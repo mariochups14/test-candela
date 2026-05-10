@@ -1,12 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="80" fill="#0f172a"/>
-  <rect x="60" y="80" width="392" height="352" rx="20" fill="#1e293b"/>
-  <rect x="100" y="130" width="200" height="18" rx="9" fill="#3b82f6"/>
-  <rect x="100" y="168" width="312" height="12" rx="6" fill="#475569"/>
-  <rect x="100" y="192" width="280" height="12" rx="6" fill="#475569"/>
-  <rect x="100" y="240" width="200" height="18" rx="9" fill="#3b82f6"/>
-  <rect x="100" y="278" width="312" height="12" rx="6" fill="#475569"/>
-  <rect x="100" y="302" width="250" height="12" rx="6" fill="#475569"/>
-  <circle cx="380" cy="360" r="70" fill="#3b82f6"/>
-  <text x="380" y="378" text-anchor="middle" font-family="Arial" font-size="60" font-weight="bold" fill="white">?</text>
+  <!-- Fondo con esquinas redondeadas -->
+  <rect width="512" height="512" rx="90" fill="#0f172a"/>
+
+  <!-- Columna central de la balanza -->
+  <rect x="246" y="108" width="20" height="260" rx="10" fill="#3b82f6"/>
+
+  <!-- Viga horizontal superior -->
+  <rect x="116" y="106" width="280" height="16" rx="8" fill="#60a5fa"/>
+
+  <!-- Cadena izquierda -->
+  <rect x="174" y="122" width="6" height="76" rx="3" fill="#93c5fd"/>
+
+  <!-- Cadena derecha -->
+  <rect x="332" y="122" width="6" height="76" rx="3" fill="#93c5fd"/>
+
+  <!-- Platillo izquierdo (ligeramente más alto - equilibrado) -->
+  <ellipse cx="177" cy="210" rx="52" ry="14" fill="#1e3a5f" stroke="#3b82f6" stroke-width="4"/>
+  <path d="M125 210 Q177 230 229 210" stroke="#3b82f6" stroke-width="3" fill="none"/>
+
+  <!-- Platillo derecho -->
+  <ellipse cx="335" cy="210" rx="52" ry="14" fill="#1e3a5f" stroke="#3b82f6" stroke-width="4"/>
+  <path d="M283 210 Q335 230 387 210" stroke="#3b82f6" stroke-width="3" fill="none"/>
+
+  <!-- Pie / base -->
+  <rect x="216" y="360" width="80" height="18" rx="9" fill="#2563eb"/>
+  <rect x="178" y="374" width="156" height="14" rx="7" fill="#3b82f6"/>
+  <rect x="148" y="384" width="216" height="12" rx="6" fill="#1d4ed8"/>
+
+  <!-- Estrella decorativa superior -->
+  <circle cx="256" cy="96" r="16" fill="#facc15"/>
+  <circle cx="256" cy="96" r="9" fill="#fbbf24"/>
 </svg>
